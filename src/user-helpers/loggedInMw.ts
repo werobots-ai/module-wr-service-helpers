@@ -1,6 +1,6 @@
 import { Handler } from "express";
-import { getDaprUrl } from "../../dapr-helpers/getDaprUrl.js";
-import { userSingleton } from "../../singletons/userSingleton.js";
+import { getDaprUrl } from "../dapr-helpers/getDaprUrl.js";
+import { userSingleton } from "./userSingleton.js";
 
 const securityHeaderName =
   process.env.SECURITY_HEADER_NAME || ("x-wr-key" as string);
