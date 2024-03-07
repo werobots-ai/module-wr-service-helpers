@@ -1,10 +1,15 @@
 import { ErrorRequestHandler } from "express";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.error(`API Error:`, err, {
-    path: req.path,
-    method: req.method,
-  });
+  console.error(
+    `API Error:`,
+    {
+      path: req.path,
+      method: req.method,
+      body: req.body,
+    },
+    err
+  );
 
   if (err.status || err.statusCode) {
     res.status(err.status || err.statusCode).send(err.message);
