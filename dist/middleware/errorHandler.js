@@ -1,5 +1,8 @@
 export const errorHandler = (err, req, res, next) => {
-    console.error(err);
+    console.error(`API Error:`, err, {
+        path: req.path,
+        method: req.method,
+    });
     if (err.status || err.statusCode) {
         res.status(err.status || err.statusCode).send(err.message);
         return;
