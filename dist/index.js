@@ -5,3 +5,4 @@ export * from "./utils/generateUniqueId.js";
 export * from "./utils/validateEnv.js";
 export * from "./dapr-helpers/getDaprUrl.js";
 export * from "./types/User.js";
+export * from "./middleware/errorHandler.js";
