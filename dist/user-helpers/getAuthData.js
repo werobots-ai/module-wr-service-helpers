@@ -1,2 +1,2 @@
-import { userSingleton } from "./userSingleton.js";
-export const getAuthData = () => userSingleton.getStore();
+import { authSingleton } from "./authSingleton.js";
+export const getAuthData = () => authSingleton.getStore();

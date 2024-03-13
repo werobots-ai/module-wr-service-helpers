@@ -1,6 +1,6 @@
 import { Handler } from "express";
 import { getDaprUrl } from "../dapr-helpers/getDaprUrl.js";
-import { userSingleton } from "./userSingleton.js";
+import { authSingleton } from "./authSingleton.js";
 
 const securityHeaderName =
   process.env.SECURITY_HEADER_NAME || ("x-wr-key" as string);
@@ -30,7 +30,7 @@ export const ensureLoggedIn: Handler = async (req, res, next) => {
       return;
     }
 
-    userSingleton.run(authData, next);
+    authSingleton.run(authData, next);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

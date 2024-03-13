@@ -1,5 +1,5 @@
 import { getDaprUrl } from "../dapr-helpers/getDaprUrl.js";
-import { userSingleton } from "./userSingleton.js";
+import { authSingleton } from "./authSingleton.js";
 const securityHeaderName = process.env.SECURITY_HEADER_NAME || "x-wr-key";
 export const ensureLoggedIn = async (req, res, next) => {
     try {
@@ -21,7 +21,7 @@ export const ensureLoggedIn = async (req, res, next) => {
             res.status(401).send("Unauthorized");
             return;
         }
-        userSingleton.run(authData, next);
+        authSingleton.run(authData, next);
     }
     catch (error) {
         console.error(error);

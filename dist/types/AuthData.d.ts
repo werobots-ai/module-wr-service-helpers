@@ -11,4 +11,4 @@ export interface AuthData {
         domain: string;
     };
 }
-export type UserSingleton = AsyncLocalStorage<AuthData>;
+export type AuthSingleton = AsyncLocalStorage<AuthData>;
