@@ -1,4 +1,4 @@
 import { AsyncLocalStorage } from "async_hooks";
-import { User } from "../types/User.js";
+import { AuthData } from "../types/AuthData.js";
 
-export const userSingleton = new AsyncLocalStorage<{ user: User }>();
+export const userSingleton = new AsyncLocalStorage<AuthData>();

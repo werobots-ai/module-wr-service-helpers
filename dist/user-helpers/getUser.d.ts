@@ -1,1 +1,1 @@
-export declare const getUser: () => import("../index.js").User;
+export declare const getAuthData: () => import("../index.js").User;
