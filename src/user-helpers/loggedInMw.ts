@@ -7,6 +7,12 @@ const securityHeaderName =
 
 export const ensureLoggedIn: Handler = async (req, res, next) => {
   try {
+    const token = req.headers[securityHeaderName];
+    if (!token) {
+      res.status(401).send("Unauthorized");
+      return;
+    }
+
     const daprUrl = getDaprUrl("service-wr-auth", `/verify`);
 
     const userQueryResponse = await fetch(daprUrl, {

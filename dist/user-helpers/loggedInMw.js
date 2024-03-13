@@ -3,6 +3,11 @@ import { authSingleton } from "./authSingleton.js";
 const securityHeaderName = process.env.SECURITY_HEADER_NAME || "x-wr-key";
 export const ensureLoggedIn = async (req, res, next) => {
     try {
+        const token = req.headers[securityHeaderName];
+        if (!token) {
+            res.status(401).send("Unauthorized");
+            return;
+        }
         const daprUrl = getDaprUrl("service-wr-auth", `/verify`);
         const userQueryResponse = await fetch(daprUrl, {
             method: "POST",
