@@ -1,4 +1,1 @@
-export declare const getAuthData: () => {
-    name: string;
-    domain: string;
-};
+export declare const getAuthData: () => import("../index.js").AuthData | undefined;
