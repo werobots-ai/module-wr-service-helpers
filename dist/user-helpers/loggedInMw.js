@@ -3,22 +3,25 @@ import { userSingleton } from "./userSingleton.js";
 const securityHeaderName = process.env.SECURITY_HEADER_NAME || "x-wr-key";
 export const ensureLoggedIn = async (req, res, next) => {
     try {
-        const daprUrl = getDaprUrl("service-wr-auth", `/account/${req.headers[securityHeaderName]}`);
-        const userQueryResponse = await fetch(daprUrl);
-        if (userQueryResponse.status === 404) {
-            res.status(403).send("Unauthorized");
-            return;
-        }
+        const daprUrl = getDaprUrl("service-wr-auth", `/verify`);
+        const userQueryResponse = await fetch(daprUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                token: req.headers[securityHeaderName],
+            }),
+        });
         if (!userQueryResponse.ok) {
-            res.status(500).send("Internal Server Error");
+            res.status(userQueryResponse.status).send(await userQueryResponse.text());
+        }
+        const authData = await userQueryResponse.json();
+        if (!authData) {
+            res.status(401).send("Unauthorized");
             return;
         }
-        const user = await userQueryResponse.json();
-        if (!user) {
-            res.status(403).send("Unauthorized");
-            return;
-        }
-        userSingleton.run({ user }, next);
+        userSingleton.run(authData, next);
     }
     catch (error) {
         console.error(error);
