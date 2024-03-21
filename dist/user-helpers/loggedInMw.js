@@ -20,6 +20,7 @@ export const ensureLoggedIn = async (req, res, next) => {
         });
         if (!userQueryResponse.ok) {
             res.status(userQueryResponse.status).send(await userQueryResponse.text());
+            return;
         }
         const authData = await userQueryResponse.json();
         if (!authData) {
