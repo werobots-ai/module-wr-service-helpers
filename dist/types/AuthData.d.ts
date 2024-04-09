@@ -1,4 +1,4 @@
-/// <reference types="node" resolution-mode="require"/>
+/// <reference types="node" />
 import { AsyncLocalStorage } from "async_hooks";
 export interface AuthData {
     org: {

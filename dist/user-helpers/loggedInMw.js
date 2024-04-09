@@ -1,14 +1,17 @@
-import { getDaprUrl } from "../dapr-helpers/getDaprUrl.js";
-import { authSingleton } from "./authSingleton.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ensureLoggedIn = void 0;
+const getDaprUrl_js_1 = require("../dapr-helpers/getDaprUrl.js");
+const authSingleton_js_1 = require("./authSingleton.js");
 const securityHeaderName = process.env.SECURITY_HEADER_NAME || "x-wr-key";
-export const ensureLoggedIn = async (req, res, next) => {
+const ensureLoggedIn = async (req, res, next) => {
     try {
         const token = req.headers[securityHeaderName];
         if (!token) {
             res.status(401).send("Unauthorized");
             return;
         }
-        const daprUrl = getDaprUrl("service-wr-auth", `/verify`);
+        const daprUrl = (0, getDaprUrl_js_1.getDaprUrl)("service-wr-auth", `/verify`);
         const userQueryResponse = await fetch(daprUrl, {
             method: "POST",
             headers: {
@@ -27,10 +30,11 @@ export const ensureLoggedIn = async (req, res, next) => {
             res.status(401).send("Unauthorized");
             return;
         }
-        authSingleton.run(authData, next);
+        authSingleton_js_1.authSingleton.run(authData, next);
     }
     catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
     }
 };
+exports.ensureLoggedIn = ensureLoggedIn;
