@@ -1,12 +1,19 @@
 {
-  "name": "module-wr-service-helpers",
-  "version": "1.0.0",
+  "name": "@werobots/module-wr-service-helpers",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/werobots-ai/service-wr-consumption-manager.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/werobots-ai"
   },
   "author": "",
   "license": "ISC",
