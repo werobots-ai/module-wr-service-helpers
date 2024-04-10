@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/werobots-ai/service-wr-consumption-manager.git"
+    "url": "git+ssh://git@github.com:werobots-ai/module-wr-service-helpers.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/werobots-ai"
