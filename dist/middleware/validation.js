@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (schema, property = "body") => (req, _, next) => {
+exports.validation = void 0;
+const validation = (schema, property = "body") => (req, _, next) => {
     const result = schema.safeParse(req[property]);
     if (result.success) {
         req[property] = result.data;
@@ -22,3 +23,4 @@ exports.default = (schema, property = "body") => (req, _, next) => {
             });
     }
 };
+exports.validation = validation;

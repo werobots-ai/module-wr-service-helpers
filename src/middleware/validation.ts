@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodObject } from "zod";
 
-export default (schema: ZodObject<any>, property: "body" | "query" | "params" = "body") =>
+export const validation = (schema: ZodObject<any>, property: "body" | "query" | "params" = "body") =>
   (req: Request, _: Response, next: NextFunction) => {
     const result = schema.safeParse(req[property]);
     if (result.success) {
