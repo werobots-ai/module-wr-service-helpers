@@ -9,6 +9,7 @@ export interface AuthData {
     user: {
         name: string;
         domain: string;
+        id: string;
     };
 }
 export type AuthSingleton = AsyncLocalStorage<AuthData>;

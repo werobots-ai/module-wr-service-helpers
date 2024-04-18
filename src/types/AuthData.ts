@@ -9,6 +9,7 @@ export interface AuthData {
   user: {
     name: string;
     domain: string;
+    id: string;
   };
 }
 
