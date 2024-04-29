@@ -29,10 +29,10 @@ class Logger {
     }
     catchNodeExceptions() {
         process.on("uncaughtException", (error) => {
-            this.error("Uncaught exception", error);
+            this.error("!!! UNCAUGHT EXCEPTION !!!", error);
         });
         process.on("unhandledRejection", (error) => {
-            this.error("Unhandled rejection", error);
+            this.error("!!! UNHANDLED REJECTION !!!", error);
         });
     }
     log(...args) {
@@ -43,6 +43,15 @@ class Logger {
     }
     warn(...args) {
         this.oldConsole.warn(`WARN: `, ...args.map(this.argMapper));
+    }
+    info(...args) {
+        this.oldConsole.info(`INFO: `, ...args.map(this.argMapper));
+    }
+    debug(...args) {
+        this.oldConsole.debug(`DEBUG: `, ...args.map(this.argMapper));
+    }
+    trace(...args) {
+        this.oldConsole.trace(`TRACE: `, ...args.map(this.argMapper));
     }
 }
 exports.logger = new Logger();
