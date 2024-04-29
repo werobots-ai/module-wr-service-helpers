@@ -8,3 +8,4 @@ export * from "./dapr-helpers/getDaprUrl";
 export * from "./types/AuthData";
 export * from "./middleware/errorHandler";
 export * from "./middleware/validation";
+export * from "./logger/logger";

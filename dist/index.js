@@ -24,3 +24,4 @@ __exportStar(require("./dapr-helpers/getDaprUrl"), exports);
 __exportStar(require("./types/AuthData"), exports);
 __exportStar(require("./middleware/errorHandler"), exports);
 __exportStar(require("./middleware/validation"), exports);
+__exportStar(require("./logger/logger"), exports);
