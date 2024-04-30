@@ -17,14 +17,17 @@ class Logger {
         console.log("Initializing logger");
         this.patchConsole();
         this.catchNodeExceptions();
-        console.log("Logger initialized");
+        console.log("Logger initialized"); // this will log "INFO: Logger initialized"
     }
     patchConsole() {
         if (this.consolePatched)
             return;
         console.log = this.log.bind(this);
-        console.error = this.error.bind(this);
+        console.info = this.info.bind(this);
         console.warn = this.warn.bind(this);
+        console.debug = this.debug.bind(this);
+        console.trace = this.trace.bind(this);
+        console.error = this.error.bind(this);
         this.consolePatched = true;
     }
     catchNodeExceptions() {
@@ -38,20 +41,20 @@ class Logger {
     log(...args) {
         this.oldConsole.log(`INFO: `, ...args.map(this.argMapper));
     }
-    error(...args) {
-        this.oldConsole.error(`ERROR: `, ...args.map(this.argMapper));
-    }
-    warn(...args) {
-        this.oldConsole.warn(`WARN: `, ...args.map(this.argMapper));
-    }
     info(...args) {
         this.oldConsole.info(`INFO: `, ...args.map(this.argMapper));
     }
+    warn(...args) {
+        this.oldConsole.warn(`INFO: WARN: `, ...args.map(this.argMapper));
+    }
     debug(...args) {
-        this.oldConsole.debug(`DEBUG: `, ...args.map(this.argMapper));
+        this.oldConsole.debug(`INFO: DEBUG: `, ...args.map(this.argMapper));
     }
     trace(...args) {
-        this.oldConsole.trace(`TRACE: `, ...args.map(this.argMapper));
+        this.oldConsole.trace(`INFO: TRACE: `, ...args.map(this.argMapper));
+    }
+    error(...args) {
+        this.oldConsole.error(`ERROR: `, ...args.map(this.argMapper));
     }
 }
 exports.logger = new Logger();
