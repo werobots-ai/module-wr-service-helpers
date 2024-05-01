@@ -10,6 +10,7 @@ export interface AuthData {
     name: string;
     domain: string;
     id: string;
+    roles: string[];
   };
 }
 
