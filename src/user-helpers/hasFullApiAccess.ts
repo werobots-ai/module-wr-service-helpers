@@ -6,7 +6,7 @@ import { AuthData } from "../types/AuthData.js";
 const securityHeaderName =
   process.env.SECURITY_HEADER_NAME || ("x-wr-key" as string);
 
-export const ensureLoggedIn: Handler = async (req, res, next) => {
+export const hasFullApiAccess: Handler = async (req, res, next) => {
   try {
     const token = req.headers[securityHeaderName];
     if (!token) {
@@ -35,6 +35,11 @@ export const ensureLoggedIn: Handler = async (req, res, next) => {
 
     if (!authData) {
       res.status(401).send("Unauthorized");
+      return;
+    }
+
+    if (!authData.user.roles.includes("full-api-access")) {
+      res.status(403).send("Forbidden");
       return;
     }
 

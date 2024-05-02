@@ -10,7 +10,7 @@ export interface AuthData {
         name: string;
         domain: string;
         id: string;
-        roles: string[];
+        roles: "full-api-access"[];
     };
 }
 export type AuthSingleton = AsyncLocalStorage<AuthData>;
