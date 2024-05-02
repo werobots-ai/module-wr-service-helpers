@@ -16,6 +16,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./user-helpers/getAuthData"), exports);
 __exportStar(require("./user-helpers/loggedInMw"), exports);
+__exportStar(require("./user-helpers/hasFullApiAccess"), exports);
 __exportStar(require("./user-helpers/authSingleton"), exports);
 __exportStar(require("./utils/generateUniqueId"), exports);
 __exportStar(require("./utils/validateEnv"), exports);

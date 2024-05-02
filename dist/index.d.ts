@@ -1,5 +1,6 @@
 export * from "./user-helpers/getAuthData";
 export * from "./user-helpers/loggedInMw";
+export * from "./user-helpers/hasFullApiAccess";
 export * from "./user-helpers/authSingleton";
 export * from "./utils/generateUniqueId";
 export * from "./utils/validateEnv";
