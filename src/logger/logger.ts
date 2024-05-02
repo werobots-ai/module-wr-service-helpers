@@ -42,10 +42,16 @@ class Logger {
   public catchNodeExceptions() {
     process.on("uncaughtException", (error: Error) => {
       this.error("!!! UNCAUGHT EXCEPTION !!!", error);
+
+      // we need to exit the process, otherwise it will keep running
+      process.exit(1);
     });
 
     process.on("unhandledRejection", (error: Error) => {
       this.error("!!! UNHANDLED REJECTION !!!", error);
+
+      // we need to exit the process, otherwise it will keep running
+      process.exit(1);
     });
   }
 
