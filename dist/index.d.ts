@@ -9,4 +9,5 @@ export * from "./dapr-helpers/getDaprUrl";
 export * from "./types/AuthData";
 export * from "./middleware/errorHandler";
 export * from "./middleware/validation";
+export * from "./middleware/sharepointAuth";
 export * from "./logger/logger";
