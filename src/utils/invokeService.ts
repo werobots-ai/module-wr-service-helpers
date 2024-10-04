@@ -35,7 +35,7 @@ export const invokeService = async (
   method: "GET" | "POST" | "PUT" | "DELETE" | "get" | "post" | "put" | "delete",
   data?: any,
   options?: {
-    headers?: HeadersInit;
+    headers?: Record<string, string | null>;
     skipJsonParse?: boolean;
     [key: string]: any;
   }
@@ -52,7 +52,21 @@ export const invokeService = async (
         "Content-Type": "application/json",
       },
       body: data ? JSON.stringify(data) : undefined,
-      ...options, // allow overriding the headers and other fetch options
+      ...options, // allow overriding other fetch options
+      // only add headers if they are defined. this is so this method stays compatible with the legacy dapr invoke method
+      ...(options?.headers
+        ? {
+            headers: Object.keys(options.headers)
+              .filter((k) => options.headers && options.headers[k])
+              .reduce(
+                (acc, key) => ({
+                  ...acc,
+                  [key]: options.headers![key],
+                }),
+                {}
+              ),
+          }
+        : {}),
     });
 
     if (!rawResponse.ok) {
