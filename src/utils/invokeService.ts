@@ -32,7 +32,19 @@ const getServiceUrl = (serviceName: string) => {
 export const invokeService = async (
   service: string,
   path: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" | "get" | "post" | "put" | "delete",
+  method:
+    | "GET"
+    | "POST"
+    | "PUT"
+    | "PATCH"
+    | "DELETE"
+    | "MERGE"
+    | "get"
+    | "post"
+    | "put"
+    | "patch"
+    | "delete"
+    | "merge",
   data?: any,
   options?: {
     headers?: Record<string, string | null>;
