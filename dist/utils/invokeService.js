@@ -19,6 +19,14 @@ const getServiceUrl = (serviceName) => {
     console.log(`Loading URL for service: ${serviceName} from env: ${envKey}`);
     const serviceUrl = process.env[getEnvKeyForService(serviceName)];
     if (!serviceUrl) {
+        console.warn(`
+
+        ==========================================================
+        WARNING: No URL found for service: ${serviceName}
+        You need to set the environment variable ${envKey}
+        ==========================================================
+        
+    `);
         throw new Error(`No URL found for service: ${serviceName}`);
     }
     console.log(`Loaded URL for service: ${serviceName}: ${serviceUrl}`);
