@@ -1,7 +1,7 @@
 import { Handler } from "express";
-import { getDaprUrl } from "../dapr-helpers/getDaprUrl.js";
 import { authSingleton } from "./authSingleton.js";
 import { AuthData } from "../types/AuthData.js";
+import { invokeService } from "../utils/invokeService.js";
 
 const securityHeaderName =
   process.env.SECURITY_HEADER_NAME || ("x-wr-key" as string);
@@ -14,17 +14,15 @@ export const hasFullApiAccess: Handler = async (req, res, next) => {
       return;
     }
 
-    const daprUrl = getDaprUrl("service-wr-auth", `/verify`);
-
-    const userQueryResponse = await fetch(daprUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const userQueryResponse = await invokeService(
+      "service-wr-auth",
+      `/verify`,
+      "POST",
+      {
         token: req.headers[securityHeaderName],
-      }),
-    });
+      },
+      { skipJsonParse: true }
+    );
 
     if (!userQueryResponse.ok) {
       res.status(userQueryResponse.status).send(await userQueryResponse.text());

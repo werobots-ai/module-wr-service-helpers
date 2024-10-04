@@ -1,6 +1,5 @@
-import { getDaprUrl } from "../dapr-helpers/getDaprUrl";
-
 import { Request, Response, NextFunction } from "express";
+import { invokeService } from "../utils/invokeService";
 
 export const sharepointAuth = async (
   req: Request,
@@ -11,23 +10,18 @@ export const sharepointAuth = async (
     const token = req.headers["x-wr-key"] as string | undefined;
     const MSToken = req.headers["x-wr-ms-token"] as string | undefined;
 
-    const daprUrl = getDaprUrl(
+    const authResponse = await invokeService(
       "service-wr-auth",
-      `/sharepoint-auth`
-    );
-
-    const authResponse = await fetch(daprUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+      `/sharepoint-auth`,
+      "POST",
+      {
         token,
         MSToken,
         workspaceId: req.params.workspaceId,
         assistantId: req.params.assistantId,
-      }),
-    });
+      },
+      { skipJsonParse: true }
+    );
 
     if (!authResponse.ok) {
       res.status(authResponse.status).send(await authResponse.json());

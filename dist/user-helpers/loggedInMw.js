@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ensureLoggedIn = void 0;
-const getDaprUrl_js_1 = require("../dapr-helpers/getDaprUrl.js");
 const authSingleton_js_1 = require("./authSingleton.js");
+const invokeService_js_1 = require("../utils/invokeService.js");
 const securityHeaderName = process.env.SECURITY_HEADER_NAME || "x-wr-key";
 const ensureLoggedIn = async (req, res, next) => {
     try {
@@ -11,16 +11,9 @@ const ensureLoggedIn = async (req, res, next) => {
             res.status(401).send("Unauthorized");
             return;
         }
-        const daprUrl = (0, getDaprUrl_js_1.getDaprUrl)("service-wr-auth", `/verify`);
-        const userQueryResponse = await fetch(daprUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                token: req.headers[securityHeaderName],
-            }),
-        });
+        const userQueryResponse = await (0, invokeService_js_1.invokeService)("service-wr-auth", "/verify", "POST", {
+            token: req.headers[securityHeaderName],
+        }, { skipJsonParse: true });
         if (!userQueryResponse.ok) {
             res.status(userQueryResponse.status).send(await userQueryResponse.text());
             return;

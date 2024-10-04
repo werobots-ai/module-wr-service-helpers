@@ -2,7 +2,7 @@
 
 ## Overview
 
-`module-wr-service-helpers` is a utility library designed to simplify common tasks for service development within the werobots-ai ecosystem. It provides helper functions such as unique ID generation and Dapr service URL retrieval, streamlining the integration and utilization of these utilities in your projects.
+`module-wr-service-helpers` is a utility library designed to simplify common tasks for service development within the werobots-ai ecosystem. It provides helper functions such as unique ID generation, streamlining the integration and utilization of these utilities in your projects.
 
 ## Installation
 
@@ -44,7 +44,7 @@ Replace `^latest-version` with the actual version you need. This ensures only `p
 After installation, you can import and use the provided functions in your project as follows:
 
 ```typescript
-import { generateUniqueId, getDaprUrl } from "module-wr-service-helpers";
+import { generateUniqueId } from "module-wr-service-helpers";
 
 const uniqueId = generateUniqueId();
 ```
