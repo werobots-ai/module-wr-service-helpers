@@ -67,7 +67,14 @@ const invokeService = async (service, path, method, data, options) => {
         return await rawResponse.json();
     }
     catch (error) {
-        throw new Error(`Error while invoking service ${service}: ${error.message}`);
+        throw new Error(`Error while invoking service ${service}: ${error.message} ${JSON.stringify({
+            error,
+            service,
+            path,
+            method,
+            data,
+            options,
+        })} `);
     }
 };
 exports.invokeService = invokeService;
