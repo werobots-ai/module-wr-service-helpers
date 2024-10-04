@@ -91,12 +91,6 @@ export const invokeService = async (
       },
     };
 
-    console.log(
-      `DEBUG: Invoking fetch ${service} at ${url} with options: ${JSON.stringify(
-        fetchOptions
-      )}`
-    );
-
     const rawResponse = await fetch(url, fetchOptions);
 
     if (!rawResponse.ok) {

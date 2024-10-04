@@ -55,7 +55,6 @@ const invokeService = async (service, path, method, data, options) => {
                     : {}),
             },
         };
-        console.log(`DEBUG: Invoking fetch ${service} at ${url} with options: ${JSON.stringify(fetchOptions)}`);
         const rawResponse = await fetch(url, fetchOptions);
         if (!rawResponse.ok) {
             const status = rawResponse.status;
