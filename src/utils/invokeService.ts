@@ -35,7 +35,7 @@ export const invokeService = async (
   method: "GET" | "POST" | "PUT" | "DELETE" | "get" | "post" | "put" | "delete",
   data?: any,
   options?: {
-    headers?: Record<string, string>;
+    headers?: HeadersInit;
     skipJsonParse?: boolean;
     [key: string]: any;
   }
