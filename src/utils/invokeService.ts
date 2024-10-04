@@ -18,7 +18,7 @@ const getServiceUrl = (serviceName: string) => {
   const envKey = getEnvKeyForService(serviceName);
   console.log(`Loading URL for service: ${serviceName} from env: ${envKey}`);
 
-  const serviceUrl = process.env[getEnvKeyForService(serviceName)];
+  const serviceUrl = process.env[envKey];
   if (!serviceUrl) {
     console.warn(`
 
@@ -26,8 +26,9 @@ const getServiceUrl = (serviceName: string) => {
         WARNING: No URL found for service: ${serviceName}
         You need to set the environment variable ${envKey}
         ==========================================================
-        
+
     `);
+
     throw new Error(`No URL found for service: ${serviceName}`);
   }
 
@@ -36,6 +37,19 @@ const getServiceUrl = (serviceName: string) => {
 
   return serviceUrl;
 };
+
+const removeNullHeaders = (
+  headers: Record<string, string | null>
+): Record<string, string> =>
+  Object.keys(headers)
+    .filter((k) => headers[k] !== null)
+    .reduce(
+      (acc, key) => ({
+        ...acc,
+        [key]: headers[key],
+      }),
+      {}
+    );
 
 export const invokeService = async (
   service: string,
@@ -60,33 +74,21 @@ export const invokeService = async (
     [key: string]: any;
   }
 ) => {
-  // streaming not yet supported. it simply fetches the data from the service
-  // and returns it as a JSON object
-  // handles errors and status codes
   try {
     const url = getServiceUrl(service) + path;
 
     const rawResponse = await fetch(url, {
       method: method.toUpperCase(),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: data ? JSON.stringify(data) : undefined,
-      ...options, // allow overriding other fetch options
-      // only add headers if they are defined. this is so this method stays compatible with the legacy dapr invoke method
-      ...(options?.headers
-        ? {
-            headers: Object.keys(options.headers)
-              .filter((k) => options.headers && options.headers[k])
-              .reduce(
-                (acc, key) => ({
-                  ...acc,
-                  [key]: options.headers![key],
-                }),
-                {}
-              ),
-          }
+      ...(data
+        ? { body: typeof data === "object" ? JSON.stringify(data) : data }
         : {}),
+      ...(options || {}),
+      headers: {
+        ...(options?.headers ? removeNullHeaders(options.headers) : {}),
+        ...(data && typeof data === "object"
+          ? { "Content-Type": "application/json" }
+          : {}),
+      },
     });
 
     if (!rawResponse.ok) {
