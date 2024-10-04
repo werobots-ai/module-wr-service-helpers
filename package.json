@@ -1,6 +1,6 @@
 {
   "name": "@werobots-ai/module-wr-service-helpers",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
