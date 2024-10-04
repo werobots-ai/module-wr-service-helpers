@@ -21,6 +21,7 @@ __exportStar(require("./user-helpers/authSingleton"), exports);
 __exportStar(require("./utils/generateUniqueId"), exports);
 __exportStar(require("./utils/validateEnv"), exports);
 __exportStar(require("./utils/requireEnv"), exports);
+__exportStar(require("./utils/invokeService"), exports);
 __exportStar(require("./dapr-helpers/getDaprUrl"), exports);
 __exportStar(require("./types/AuthData"), exports);
 __exportStar(require("./middleware/errorHandler"), exports);

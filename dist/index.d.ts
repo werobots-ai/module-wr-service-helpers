@@ -5,6 +5,7 @@ export * from "./user-helpers/authSingleton";
 export * from "./utils/generateUniqueId";
 export * from "./utils/validateEnv";
 export * from "./utils/requireEnv";
+export * from "./utils/invokeService";
 export * from "./dapr-helpers/getDaprUrl";
 export * from "./types/AuthData";
 export * from "./middleware/errorHandler";
