@@ -14,6 +14,31 @@ npm i https://github.com/werobots-ai/module-wr-service-helpers
 
 This command fetches the latest version of the module and installs it in your project. You can use the same command to update the module to the latest version.
 
+### Bulk Update `@werobots-ai/module-wr-service-helpers` Version in All `package.json` Files
+
+To update all instances of `@werobots-ai/module-wr-service-helpers` to the latest version across multiple `package.json` files using VSCode:
+
+1. Open the **Find and Replace** panel (`Ctrl + Shift + H` or `Cmd + Shift + H` on macOS).
+2. Enable **Regex Search** by clicking the `.*` icon.
+3. In the **Search** field, enter the following regex to locate the package version:
+
+   ```regex
+   "@werobots-ai/module-wr-service-helpers":\s*"[^"]+"
+   ```
+
+4. In the **Replace** field, input the desired version, e.g.,:
+
+   ```json
+   "@werobots-ai/module-wr-service-helpers": "^latest-version"
+   ```
+
+5. Set `files to include` to `package.json` to avoid modifying `package-lock.json`.
+6. Click **Replace All** to update all occurrences.
+
+This will replace all instances with the specified version in `package.json` files only.
+
+Replace `^latest-version` with the actual version you need. This ensures only `package.json` files are modified, leaving `package-lock.json` updates to another install script.
+
 ## Usage
 
 After installation, you can import and use the provided functions in your project as follows:

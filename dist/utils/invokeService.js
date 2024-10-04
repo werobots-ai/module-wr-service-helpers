@@ -42,7 +42,7 @@ const removeNullHeaders = (headers) => Object.keys(headers)
 const invokeService = async (service, path, method, data, options) => {
     try {
         const url = getServiceUrl(service) + path;
-        const rawResponse = await fetch(url, {
+        const fetchOptions = {
             method: method.toUpperCase(),
             ...(data
                 ? { body: typeof data === "object" ? JSON.stringify(data) : data }
@@ -54,7 +54,9 @@ const invokeService = async (service, path, method, data, options) => {
                     ? { "Content-Type": "application/json" }
                     : {}),
             },
-        });
+        };
+        console.log(`DEBUG: Invoking fetch ${service} at ${url} with options: ${JSON.stringify(fetchOptions)}`);
+        const rawResponse = await fetch(url, fetchOptions);
         if (!rawResponse.ok) {
             const status = rawResponse.status;
             const error = await rawResponse.text();

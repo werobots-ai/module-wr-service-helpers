@@ -67,7 +67,7 @@ export const invokeService = async (
     | "patch"
     | "delete"
     | "merge",
-  data?: any,
+  data?: string | Record<string, any>,
   options?: {
     headers?: Record<string, string | null>;
     skipJsonParse?: boolean;
@@ -77,7 +77,7 @@ export const invokeService = async (
   try {
     const url = getServiceUrl(service) + path;
 
-    const rawResponse = await fetch(url, {
+    const fetchOptions = {
       method: method.toUpperCase(),
       ...(data
         ? { body: typeof data === "object" ? JSON.stringify(data) : data }
@@ -89,7 +89,15 @@ export const invokeService = async (
           ? { "Content-Type": "application/json" }
           : {}),
       },
-    });
+    };
+
+    console.log(
+      `DEBUG: Invoking fetch ${service} at ${url} with options: ${JSON.stringify(
+        fetchOptions
+      )}`
+    );
+
+    const rawResponse = await fetch(url, fetchOptions);
 
     if (!rawResponse.ok) {
       const status = rawResponse.status;
