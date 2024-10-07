@@ -23,6 +23,7 @@ __exportStar(require("./utils/validateEnv"), exports);
 __exportStar(require("./utils/requireEnv"), exports);
 __exportStar(require("./utils/invokeService"), exports);
 __exportStar(require("./types/AuthData"), exports);
+__exportStar(require("./types/WorkspacePreset"), exports);
 __exportStar(require("./middleware/errorHandler"), exports);
 __exportStar(require("./middleware/validation"), exports);
 __exportStar(require("./middleware/sharepointAuth"), exports);

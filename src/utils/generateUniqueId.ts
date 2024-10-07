@@ -1,6 +1,6 @@
 export const generateUniqueId = (length: number = 24): string => {
   // Generate a unique id of a given length
-  // These IDs onyl contain lowercase letters and numbers, so they are safe to use in URLs and file names
+  // These IDs only contain lowercase letters and numbers, so they are safe to use in URLs and file names
 
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   let uniqueId = "";
