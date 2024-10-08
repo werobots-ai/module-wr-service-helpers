@@ -15,8 +15,8 @@ export type AutoIndexConfig = {
   name: string; // indices are unique by name and workspaceId. 'default-1000', 'default-2000' and 'default-4000' are reserved for legacy azure on-your-data indices
   segmenter: {
     chunkSize: number;
-    overlap: number | null;
-  } | null;
+    overlap: number;
+  };
 };
 
 export type AiParserConfig = {

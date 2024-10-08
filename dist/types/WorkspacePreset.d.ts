@@ -18,8 +18,8 @@ export type AutoIndexConfig = {
     name: string;
     segmenter: {
         chunkSize: number;
-        overlap: number | null;
-    } | null;
+        overlap: number;
+    };
 };
 export type AiParserConfig = {
     documentDescription: string;
