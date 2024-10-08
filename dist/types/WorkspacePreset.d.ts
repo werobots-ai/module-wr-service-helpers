@@ -19,7 +19,7 @@ export type AutoIndexConfig = {
     segmenter: {
         chunkSize: number;
         overlap: number;
-    };
+    } | null;
 };
 export type AiParserConfig = {
     documentDescription: string;
