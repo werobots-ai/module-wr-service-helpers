@@ -1,6 +1,7 @@
 type Field = {
     description: string;
     filterable: boolean;
+    searchable: boolean;
 } & ({
     multiValue: false;
     examples: string[];
@@ -18,7 +19,7 @@ export type AutoIndexConfig = {
     segmenter: {
         chunkSize: number;
         overlap: number | null;
-    };
+    } | null;
 };
 export type AiParserConfig = {
     documentDescription: string;
