@@ -17,7 +17,13 @@ export type WorkspacePreset = {
         fields: Record<string, {
             description: string;
             precedingReasoning: string | null;
-            multiValue: boolean;
+            multiValue: false;
+            examples: string[];
+        } | {
+            description: string;
+            precedingReasoning: string | null;
+            multiValue: true;
+            examples: string[][];
         }>;
         rules: string[];
     } | null;

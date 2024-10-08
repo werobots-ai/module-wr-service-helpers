@@ -18,11 +18,18 @@ export type WorkspacePreset = {
     documentDescription: string;
     fields: Record<
       string,
-      {
-        description: string;
-        precedingReasoning: string | null;
-        multiValue: boolean;
-      }
+      | {
+          description: string;
+          precedingReasoning: string | null;
+          multiValue: false;
+          examples: string[];
+        }
+      | {
+          description: string;
+          precedingReasoning: string | null;
+          multiValue: true;
+          examples: string[][];
+        }
     >;
     rules: string[];
   } | null;
