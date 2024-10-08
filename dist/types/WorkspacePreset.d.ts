@@ -21,6 +21,10 @@ export type AutoIndexConfig = {
         overlap: number;
     } | null;
 };
+export type EmbeddingConfig = {
+    modelName: string;
+    vectorDimension: number;
+};
 export type AiParserConfig = {
     documentDescription: string;
     fields: Record<string, Field>;
@@ -33,5 +37,6 @@ export type WorkspacePreset = {
     allowedFileTypes: string[] | null;
     autoIndex: AutoIndexConfig[] | null;
     aiParser: AiParserConfig | null;
+    embedder: EmbeddingConfig;
 };
 export {};
