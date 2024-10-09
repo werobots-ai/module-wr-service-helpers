@@ -64,7 +64,13 @@ const invokeService = async (service, path, method, data, options) => {
         if (options?.skipJsonParse) {
             return rawResponse;
         }
-        return await rawResponse.json();
+        const text = await rawResponse.text();
+        try {
+            return JSON.parse(text);
+        }
+        catch (error) {
+            return text;
+        }
     }
     catch (error) {
         throw new Error(`Error while invoking service ${service}: ${error.message} ${error.cause?.code} ${JSON.stringify({

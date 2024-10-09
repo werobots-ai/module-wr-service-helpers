@@ -5,7 +5,6 @@ export interface AuthData {
     id: string;
     name: string;
     description: string;
-    availableWorkspacePresets: string[];
   };
   user: {
     name: string;
