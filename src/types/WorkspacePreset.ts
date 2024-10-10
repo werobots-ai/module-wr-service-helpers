@@ -4,7 +4,7 @@ type Reasoning =
       reasoningExamples: string[];
     }
   | {
-      precedingReasoning: null;
+      precedingReasoning?: null;
     };
 
 type BaseField = {
