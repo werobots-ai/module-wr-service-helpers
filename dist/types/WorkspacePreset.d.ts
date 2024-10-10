@@ -5,7 +5,6 @@ type Reasoning = {
     precedingReasoning?: null;
 };
 type BaseField = {
-    name: string;
     description: string;
 } & Reasoning;
 type LeafField = BaseField & {

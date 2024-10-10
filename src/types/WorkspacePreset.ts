@@ -8,7 +8,6 @@ type Reasoning =
     };
 
 type BaseField = {
-  name: string;
   description: string;
 } & Reasoning;
 
@@ -33,6 +32,7 @@ type LeafField = BaseField & {
     | { multiValue: false; examples: string[] } // Single value examples
     | { multiValue: true; examples: string[][] }
   );
+
 type NestedField = BaseField & {
   // Nested fields have 'fields' property
   fields: Record<string, Field>;
