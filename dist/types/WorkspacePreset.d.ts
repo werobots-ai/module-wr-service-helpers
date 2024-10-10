@@ -1,29 +1,48 @@
-type Field = {
+type Reasoning = {
+    precedingReasoning: string;
+    reasoningExamples: string[];
+} | {
+    precedingReasoning: null;
+};
+type BaseField = {
+    name: string;
     description: string;
-    filterable: boolean;
+} & Reasoning;
+type LeafField = BaseField & {
+    type: "string" | "number" | "date" | "boolean";
+    dateFormat?: string;
     searchable: boolean;
-} & ({
+} & (// For filterable fields
+{
+    filterable: true;
+    label: string;
+} | {
+    filterable: false;
+    label?: string;
+}) & ({
     multiValue: false;
     examples: string[];
 } | {
     multiValue: true;
     examples: string[][];
-}) & ({
-    precedingReasoning: string;
-    reasoningExamples: string[];
-} | {
-    precedingReasoning: null;
 });
+type NestedField = BaseField & {
+    fields: Record<string, Field>;
+    multiValue: boolean;
+};
+export type Field = LeafField | NestedField;
+export type EmbedderConfig = {
+    provider: string;
+    modelName: string;
+    vectorDimension: number;
+};
 export type AutoIndexConfig = {
     name: string;
     segmenter: {
         chunkSize: number;
         overlap: number;
     } | null;
-};
-export type EmbedderConfig = {
-    modelName: string;
-    vectorDimension: number;
+    embedder: EmbedderConfig | null;
 };
 export type AiParserConfig = {
     documentDescription: string;
@@ -37,6 +56,5 @@ export type WorkspacePreset = {
     allowedFileTypes: string[] | null;
     autoIndex: AutoIndexConfig[] | null;
     aiParser: AiParserConfig | null;
-    embedder: EmbedderConfig;
 };
 export {};
