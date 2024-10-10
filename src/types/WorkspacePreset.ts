@@ -16,19 +16,9 @@ type LeafField = BaseField & {
   type: "string" | "number" | "date" | "boolean";
   dateFormat?: string; // For date fields
   searchable: boolean;
+  filterable: boolean;
+  label: string;
 } & (
-    | // For filterable fields
-    {
-        filterable: true;
-        label: string; // Label is required when filterable is true
-      }
-    // For non-filterable fields
-    | {
-        filterable: false;
-        label?: string;
-      }
-  ) &
-  (
     | { multiValue: false; examples: string[] } // Single value examples
     | { multiValue: true; examples: string[][] }
   );
