@@ -7,7 +7,7 @@ type Reasoning = {
 type BaseField = {
     description: string;
 } & Reasoning;
-type LeafField = BaseField & {
+export type AiParserLeafField = BaseField & {
     type: "string" | "number" | "date" | "boolean";
     dateFormat?: string;
     searchable: boolean;
@@ -20,11 +20,11 @@ type LeafField = BaseField & {
     multiValue: true;
     examples: string[][];
 });
-type NestedField = BaseField & {
+export type AiParserNestedField = BaseField & {
     fields: Record<string, AiParserField>;
     multiValue: boolean;
 };
-export type AiParserField = LeafField | NestedField;
+export type AiParserField = AiParserLeafField | AiParserNestedField;
 export type EmbedderConfig = {
     provider: string;
     modelName: string;

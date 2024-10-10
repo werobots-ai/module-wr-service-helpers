@@ -11,7 +11,7 @@ type BaseField = {
   description: string;
 } & Reasoning;
 
-type LeafField = BaseField & {
+export type AiParserLeafField = BaseField & {
   // Leaf fields do not have 'fields' property
   type: "string" | "number" | "date" | "boolean";
   dateFormat?: string; // For date fields
@@ -23,13 +23,13 @@ type LeafField = BaseField & {
     | { multiValue: true; examples: string[][] }
   );
 
-type NestedField = BaseField & {
+export type AiParserNestedField = BaseField & {
   // Nested fields have 'fields' property
   fields: Record<string, AiParserField>;
   multiValue: boolean;
 };
 
-export type AiParserField = LeafField | NestedField;
+export type AiParserField = AiParserLeafField | AiParserNestedField;
 
 export type EmbedderConfig = {
   provider: string;
