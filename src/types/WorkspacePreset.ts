@@ -35,11 +35,11 @@ type LeafField = BaseField & {
 
 type NestedField = BaseField & {
   // Nested fields have 'fields' property
-  fields: Record<string, Field>;
+  fields: Record<string, AiParserField>;
   multiValue: boolean;
 };
 
-export type Field = LeafField | NestedField;
+export type AiParserField = LeafField | NestedField;
 
 export type EmbedderConfig = {
   provider: string;
@@ -58,7 +58,7 @@ export type AutoIndexConfig = {
 
 export type AiParserConfig = {
   documentDescription: string;
-  fields: Record<string, Field>;
+  fields: Record<string, AiParserField>;
   rules: string[];
 };
 
