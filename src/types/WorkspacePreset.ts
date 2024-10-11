@@ -9,6 +9,7 @@ type Reasoning =
 
 type BaseField = {
   description: string;
+  label: string;
 } & Reasoning;
 
 export type AiParserLeafField = BaseField & {
@@ -17,7 +18,6 @@ export type AiParserLeafField = BaseField & {
   dateFormat?: string; // For date fields
   searchable: boolean;
   filterable: boolean;
-  label: string;
 } & (
     | { multiValue: false; examples: string[] } // Single value examples
     | { multiValue: true; examples: string[][] }
@@ -26,6 +26,9 @@ export type AiParserLeafField = BaseField & {
 export type AiParserNestedField = BaseField & {
   // Nested fields have 'fields' property
   fields: Record<string, AiParserField>;
+
+  // For nested fields a list of subfields to join and display when collapsed. array of strings with min 1 element
+  subFieldsInLabel: string[];
   multiValue: boolean;
 };
 
