@@ -42,10 +42,10 @@ export type EmbedderConfig = {
 
 export type SegmenterConfig = {
   strategy: string;
+  minLength: number;
   maxLength: number;
   minOverlap: number;
   maxOverlap: number;
-  keepParagraphs: boolean;
 };
 
 export type AutoIndexConfig = {
