@@ -31,12 +31,16 @@ export type EmbedderConfig = {
     modelName: string;
     vectorDimension: number;
 };
+export type SegmenterConfig = {
+    strategy: string;
+    maxLength: number;
+    minOverlap: number;
+    maxOverlap: number;
+    keepParagraphs: boolean;
+};
 export type AutoIndexConfig = {
     name: string;
-    segmenter: {
-        chunkSize: number;
-        overlap: number;
-    } | null;
+    segmenter: SegmenterConfig | null;
     embedder: EmbedderConfig | null;
 };
 export type AiParserConfig = {

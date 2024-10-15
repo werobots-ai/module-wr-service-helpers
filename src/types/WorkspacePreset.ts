@@ -40,13 +40,18 @@ export type EmbedderConfig = {
   vectorDimension: number;
 };
 
+export type SegmenterConfig = {
+  strategy: string;
+  maxLength: number;
+  minOverlap: number;
+  maxOverlap: number;
+  keepParagraphs: boolean;
+};
+
 export type AutoIndexConfig = {
   name: string; // Indices are unique by name and workspaceId.
-  segmenter: {
-    chunkSize: number;
-    overlap: number;
-  } | null;
-  embedder: EmbedderConfig | null; // Moved from WorkspacePreset
+  segmenter: SegmenterConfig | null;
+  embedder: EmbedderConfig | null;
 };
 
 export type AiParserConfig = {
