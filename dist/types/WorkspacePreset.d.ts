@@ -27,22 +27,41 @@ export type AiParserNestedField = BaseField & {
 };
 export type AiParserField = AiParserLeafField | AiParserNestedField;
 export type EmbedderConfig = {
+    name: string;
     provider: string;
     modelName: string;
     vectorDimension: number;
     maxLength: number;
 };
 export type SegmenterConfig = {
+    name: string;
     strategy: string;
     minLength: number;
     maxLength: number;
     minOverlap: number;
     maxOverlap: number;
+    useAiDocumentParserOutput: true;
+} | {
+    name: string;
+    strategy: string;
+    minLength: number;
+    maxLength: number;
+    minOverlap: number;
+    maxOverlap: number;
+    useAiDocumentParserOutput: false;
+    aiChunkParser: AiParserConfig | null;
 };
 export type AutoIndexConfig = {
     name: string;
-    segmenter: SegmenterConfig | null;
-    embedder: EmbedderConfig | null;
+    segmenters: SegmenterConfig[];
+    embedders: EmbedderConfig[];
+    useWorkspaceAiDocumentParserOutput: true;
+} | {
+    name: string;
+    segmenters: SegmenterConfig[];
+    embedders: EmbedderConfig[];
+    useWorkspaceAiDocumentParserOutput: false;
+    aiDocumentParser: AiParserConfig | null;
 };
 export type AiParserConfig = {
     documentDescription: string;
@@ -55,6 +74,6 @@ export type WorkspacePreset = {
     description: string;
     allowedFileTypes: string[] | null;
     autoIndex: AutoIndexConfig[] | null;
-    aiParser: AiParserConfig | null;
+    aiDocumentParser: AiParserConfig | null;
 };
 export {};

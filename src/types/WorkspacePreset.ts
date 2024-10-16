@@ -35,25 +35,48 @@ export type AiParserNestedField = BaseField & {
 export type AiParserField = AiParserLeafField | AiParserNestedField;
 
 export type EmbedderConfig = {
+  name: string; // Unique within the index, so we can search for differently embedded versions of the same text.
   provider: string;
   modelName: string;
   vectorDimension: number;
   maxLength: number;
 };
 
-export type SegmenterConfig = {
-  strategy: string;
-  minLength: number;
-  maxLength: number;
-  minOverlap: number;
-  maxOverlap: number;
-};
+export type SegmenterConfig =
+  | {
+      name: string; // Unique within the index, so we can search for differently segmented versions of the same text.
+      strategy: string;
+      minLength: number;
+      maxLength: number;
+      minOverlap: number;
+      maxOverlap: number;
+      useAiDocumentParserOutput: true;
+    }
+  | {
+      name: string; // Unique within the index, so we can search for differently segmented versions of the same text.
+      strategy: string;
+      minLength: number;
+      maxLength: number;
+      minOverlap: number;
+      maxOverlap: number;
+      useAiDocumentParserOutput: false;
+      aiChunkParser: AiParserConfig | null;
+    };
 
-export type AutoIndexConfig = {
-  name: string; // Indices are unique by name and workspaceId.
-  segmenter: SegmenterConfig | null;
-  embedder: EmbedderConfig | null;
-};
+export type AutoIndexConfig =
+  | {
+      name: string; // Indices are unique by name and workspaceId.
+      segmenters: SegmenterConfig[];
+      embedders: EmbedderConfig[];
+      useWorkspaceAiDocumentParserOutput: true;
+    }
+  | {
+      name: string; // Indices are unique by name and workspaceId.
+      segmenters: SegmenterConfig[];
+      embedders: EmbedderConfig[];
+      useWorkspaceAiDocumentParserOutput: false;
+      aiDocumentParser: AiParserConfig | null;
+    };
 
 export type AiParserConfig = {
   documentDescription: string;
@@ -67,5 +90,5 @@ export type WorkspacePreset = {
   description: string;
   allowedFileTypes: string[] | null;
   autoIndex: AutoIndexConfig[] | null;
-  aiParser: AiParserConfig | null;
+  aiDocumentParser: AiParserConfig | null;
 };
