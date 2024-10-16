@@ -30,6 +30,7 @@ export type EmbedderConfig = {
     provider: string;
     modelName: string;
     vectorDimension: number;
+    maxLength: number;
 };
 export type SegmenterConfig = {
     strategy: string;
