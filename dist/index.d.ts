@@ -6,6 +6,7 @@ export * from "./utils/generateUniqueId";
 export * from "./utils/validateEnv";
 export * from "./utils/requireEnv";
 export * from "./utils/invokeService";
+export * from "./utils/getAiParserConfig";
 export * from "./types/AuthData";
 export * from "./types/WorkspacePreset";
 export * from "./middleware/errorHandler";
