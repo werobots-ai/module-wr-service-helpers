@@ -23,6 +23,6 @@ const errorHandler = (err, req, res, next) => {
         res.status(403).send(err.message);
         return;
     }
-    res.status(500).send(`Internal Server Error: ${err.message}`);
+    res.status(500).send(`Internal Server Error: ${err.message} ${err.stack}`);
 };
 exports.errorHandler = errorHandler;
