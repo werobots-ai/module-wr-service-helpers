@@ -11,22 +11,31 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     err
   );
 
-  if (err.status || err.statusCode) {
-    res.status(err.status || err.statusCode).send(err.message);
+  if (!err) {
+    res.status(500).send("Internal Server Error");
     return;
   }
 
-  if (err.message.toLowerCase().includes("not found")) {
+  if (err.status || err.statusCode) {
+    res
+      .status(err.status || err.statusCode)
+      .send(
+        `HTTP Error ${err.status || err.statusCode}: ${err.message || err}`
+      );
+    return;
+  }
+
+  if (err.message?.toLowerCase().includes("not found")) {
     res.status(404).send(err.message);
     return;
   }
 
-  if (err.message.toLowerCase().includes("unauthorized")) {
+  if (err.message?.toLowerCase().includes("unauthorized")) {
     res.status(401).send(err.message);
     return;
   }
 
-  if (err.message.toLowerCase().includes("forbidden")) {
+  if (err.message?.toLowerCase().includes("forbidden")) {
     res.status(403).send(err.message);
     return;
   }
