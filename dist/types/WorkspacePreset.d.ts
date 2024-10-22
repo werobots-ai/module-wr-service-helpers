@@ -63,11 +63,21 @@ export type AutoIndexConfig = {
     useWorkspaceAiDocumentParserOutput: false;
     aiDocumentParser: AiParserConfig | null;
 };
+export type AiParserProcessConfig = {
+    processExtractedText: true;
+    processPageScreenshots: false;
+} | {
+    processExtractedText: false;
+    processPageScreenshots: true;
+} | {
+    processExtractedText: true;
+    processPageScreenshots: true;
+};
 export type AiParserConfig = {
     documentDescription: string;
     fields: Record<string, AiParserField>;
     rules: string[];
-};
+} & AiParserProcessConfig;
 export type WorkspacePreset = {
     name: string;
     label: string;
