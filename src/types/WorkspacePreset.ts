@@ -81,15 +81,15 @@ export type AutoIndexConfig =
 export type AiParserProcessConfig =
   | {
       processExtractedText: true;
-      processPageScreenshots: false;
+      processPageScreenshots?: null | false | undefined | "";
     }
   | {
       processExtractedText: false;
-      processPageScreenshots: true;
+      processPageScreenshots: "color" | "grayscale" | "color+grayscale";
     }
   | {
       processExtractedText: true;
-      processPageScreenshots: true;
+      processPageScreenshots: "color" | "grayscale" | "color+grayscale";
     };
 
 export type AiParserConfig = {
