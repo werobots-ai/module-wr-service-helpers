@@ -15,10 +15,10 @@ export type AiParserLeafField = BaseField & {
     filterable: boolean;
 } & ({
     multiValue: false;
-    examples: string[];
+    examples: string[] | number[];
 } | {
     multiValue: true;
-    examples: string[][];
+    examples: string[][] | number[][];
 });
 export type AiParserNestedField = BaseField & {
     fields: Record<string, AiParserField>;

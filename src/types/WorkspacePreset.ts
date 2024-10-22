@@ -19,9 +19,9 @@ export type AiParserLeafField = BaseField & {
   searchable: boolean;
   filterable: boolean;
 } & (
-    | { multiValue: false; examples: string[] } // Single value examples
-    | { multiValue: true; examples: string[][] }
-  );
+    | { multiValue: false; examples: string[] | number[] } // Single value examples
+    | { multiValue: true; examples: string[][] | number[][] }
+  ); // Multi value examples
 
 export type AiParserNestedField = BaseField & {
   // Nested fields have 'fields' property
