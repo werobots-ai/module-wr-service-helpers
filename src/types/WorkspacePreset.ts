@@ -9,6 +9,7 @@ type Reasoning =
 
 type BaseField = {
   description: string;
+  dataLanguage?: string;
   label: string;
 } & Reasoning;
 
@@ -94,6 +95,7 @@ export type AiParserProcessConfig =
 
 export type AiParserConfig = {
   documentDescription: string;
+  dataLanguage?: string;
   fields: Record<string, AiParserField>;
   rules: string[];
 } & AiParserProcessConfig;
