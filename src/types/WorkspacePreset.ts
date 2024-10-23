@@ -79,18 +79,32 @@ export type AutoIndexConfig =
       aiDocumentParser: AiParserConfig | null;
     };
 
+type ProcessScreenshotPositiveValues =
+  | "color"
+  | "grayscale"
+  | "color+grayscale";
+type ProcessScreenshotValues =
+  | ProcessScreenshotPositiveValues
+  | false
+  | null
+  | undefined
+  | "";
+
 export type AiParserProcessConfig =
   | {
       processExtractedText: true;
-      processPageScreenshots?: null | false | undefined | "";
+      processOcrText?: boolean;
+      processPageScreenshots?: ProcessScreenshotValues;
     }
   | {
-      processExtractedText: false;
-      processPageScreenshots: "color" | "grayscale" | "color+grayscale";
+      processExtractedText?: boolean;
+      processOcrText?: true;
+      processPageScreenshots?: ProcessScreenshotValues;
     }
   | {
-      processExtractedText: true;
-      processPageScreenshots: "color" | "grayscale" | "color+grayscale";
+      processExtractedText?: false;
+      processOcrText?: false;
+      processPageScreenshots: ProcessScreenshotPositiveValues;
     };
 
 export type AiParserConfig = {
