@@ -37,8 +37,18 @@ export type AiParserLeafField = BaseField & (({
 export type AiParserNestedField = BaseField & {
     fields: Record<string, AiParserField>;
     subFieldsInLabel: string[];
+    subFieldsReducer?: {
+        method: "flatten";
+    } | {
+        method: "join";
+        separator: string | string[];
+    };
     multiValue: boolean;
-};
+} & ({
+    excludeFromRag: true;
+} | {
+    subFieldsInRag: string[];
+});
 export type AiParserField = AiParserLeafField | AiParserNestedField;
 export type EmbedderConfig = {
     name: string;
