@@ -9,7 +9,9 @@ type BaseField = {
     dataLanguage?: string;
     label: string;
 } & Reasoning;
-export type AiParserLeafField = BaseField & (({
+export type AiParserLeafField = BaseField & {
+    excludeFromRag?: boolean;
+} & (({
     type: "string" | "number" | "date" | "boolean";
     dateFormat?: string;
     nullable?: false;
@@ -47,6 +49,7 @@ export type AiParserNestedField = BaseField & {
 } & ({
     excludeFromRag: true;
 } | {
+    excludeFromRag?: false;
     subFieldsInRag: string[];
 });
 export type AiParserField = AiParserLeafField | AiParserNestedField;
