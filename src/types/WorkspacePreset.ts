@@ -1,3 +1,5 @@
+import { nullable } from "zod";
+
 type Reasoning =
   | {
       precedingReasoning: string;
@@ -13,15 +15,33 @@ type BaseField = {
   label: string;
 } & Reasoning;
 
-export type AiParserLeafField = BaseField & {
-  // Leaf fields do not have 'fields' property
-  type: "string" | "number" | "date" | "boolean";
-  dateFormat?: string; // For date fields
-  searchable: boolean;
-  filterable: boolean;
-} & (
-    | { multiValue: false; examples: string[] | number[] } // Single value examples
-    | { multiValue: true; examples: string[][] | number[][] }
+export type AiParserLeafField = BaseField &
+  (
+    | ({
+        // Leaf fields do not have 'fields' property
+        type: "string" | "number" | "date" | "boolean";
+        dateFormat?: string; // For date fields
+        nullable?: false;
+        searchable: boolean;
+        filterable: boolean;
+      } & (
+        | { multiValue: false; examples: string[] | number[] } // Single value examples
+        | { multiValue: true; examples: string[][] | number[][] }
+      ))
+    | ({
+        // Leaf fields do not have 'fields' property
+        type: "string" | "number" | "date" | "boolean";
+        dateFormat?: string; // For date fields
+        nullable: true;
+        searchable: boolean;
+        filterable: boolean;
+      } & (
+        | { multiValue: false; examples: (string | null)[] | (number | null)[] } // Single value examples
+        | {
+            multiValue: true;
+            examples: (string | null)[][] | (number | null)[][];
+          }
+      ))
   ); // Multi value examples
 
 export type AiParserNestedField = BaseField & {

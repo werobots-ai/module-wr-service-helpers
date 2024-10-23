@@ -9,9 +9,10 @@ type BaseField = {
     dataLanguage?: string;
     label: string;
 } & Reasoning;
-export type AiParserLeafField = BaseField & {
+export type AiParserLeafField = BaseField & (({
     type: "string" | "number" | "date" | "boolean";
     dateFormat?: string;
+    nullable?: false;
     searchable: boolean;
     filterable: boolean;
 } & ({
@@ -20,7 +21,19 @@ export type AiParserLeafField = BaseField & {
 } | {
     multiValue: true;
     examples: string[][] | number[][];
-});
+})) | ({
+    type: "string" | "number" | "date" | "boolean";
+    dateFormat?: string;
+    nullable: true;
+    searchable: boolean;
+    filterable: boolean;
+} & ({
+    multiValue: false;
+    examples: (string | null)[] | (number | null)[];
+} | {
+    multiValue: true;
+    examples: (string | null)[][] | (number | null)[][];
+})));
 export type AiParserNestedField = BaseField & {
     fields: Record<string, AiParserField>;
     subFieldsInLabel: string[];
