@@ -102,7 +102,15 @@ export type AiParserProcessConfig = {
     processOcrText?: false;
     processPageScreenshots: ProcessScreenshotPositiveValues;
 };
+export type ModelConfig = {
+    provider: "openai";
+    modelName: string;
+    maxTokens: number;
+    temperature: number;
+    topP: number;
+};
 export type AiParserConfig = {
+    modelConfig: ModelConfig;
     documentDescription: string;
     dataLanguage?: string;
     fields: Record<string, AiParserField>;
