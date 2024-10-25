@@ -9,12 +9,9 @@ type BaseField = {
     dataLanguage?: string;
     label: string;
 } & Reasoning;
-export type AiParserLeafField = BaseField & {
-    excludeFromRag?: boolean;
-} & (({
+export type AiParserLeafField = BaseField & (({
     type: "string" | "number" | "date" | "boolean";
     dateFormat?: string;
-    nullable?: false;
     searchable: boolean;
     filterable: boolean;
 } & ({
@@ -26,7 +23,6 @@ export type AiParserLeafField = BaseField & {
 })) | ({
     type: "string" | "number" | "date" | "boolean";
     dateFormat?: string;
-    nullable: true;
     searchable: boolean;
     filterable: boolean;
 } & ({
@@ -46,12 +42,7 @@ export type AiParserNestedField = BaseField & {
         separator: string | string[];
     };
     multiValue: boolean;
-} & ({
-    excludeFromRag: true;
-} | {
-    excludeFromRag?: false;
-    subFieldsInRag: string[];
-});
+};
 export type AiParserField = AiParserLeafField | AiParserNestedField;
 export type EmbedderConfig = {
     name: string;
@@ -126,5 +117,7 @@ export type WorkspacePreset = {
     allowedFileTypes: string[] | null;
     autoIndex: AutoIndexConfig[] | null;
     aiDocumentParser: AiParserConfig | null;
+    hasFileStorage: boolean;
+    allowParsedInput: boolean;
 };
 export {};

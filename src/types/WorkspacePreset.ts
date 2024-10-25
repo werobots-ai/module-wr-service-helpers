@@ -1,5 +1,3 @@
-import { nullable } from "zod";
-
 type Reasoning =
   | {
       precedingReasoning: string;
@@ -15,12 +13,12 @@ type BaseField = {
   label: string;
 } & Reasoning;
 
-export type AiParserLeafField = BaseField & { excludeFromRag?: boolean } & (
+export type AiParserLeafField = BaseField &
+  (
     | ({
         // Leaf fields do not have 'fields' property
         type: "string" | "number" | "date" | "boolean";
         dateFormat?: string; // For date fields
-        nullable?: false;
         searchable: boolean;
         filterable: boolean;
       } & (
@@ -31,7 +29,6 @@ export type AiParserLeafField = BaseField & { excludeFromRag?: boolean } & (
         // Leaf fields do not have 'fields' property
         type: "string" | "number" | "date" | "boolean";
         dateFormat?: string; // For date fields
-        nullable: true;
         searchable: boolean;
         filterable: boolean;
       } & (
@@ -58,15 +55,7 @@ export type AiParserNestedField = BaseField & {
         separator: string | string[];
       };
   multiValue: boolean;
-} & (
-    | {
-        excludeFromRag: true;
-      }
-    | {
-        excludeFromRag?: false;
-        subFieldsInRag: string[];
-      }
-  );
+};
 
 export type AiParserField = AiParserLeafField | AiParserNestedField;
 
@@ -165,4 +154,6 @@ export type WorkspacePreset = {
   allowedFileTypes: string[] | null;
   autoIndex: AutoIndexConfig[] | null;
   aiDocumentParser: AiParserConfig | null;
+  hasFileStorage: boolean;
+  allowParsedInput: boolean;
 };
