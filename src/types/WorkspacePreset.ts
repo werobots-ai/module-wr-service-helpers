@@ -155,5 +155,8 @@ export type WorkspacePreset = {
   autoIndex: AutoIndexConfig[] | null;
   aiDocumentParser: AiParserConfig | null;
   hasFileStorage: boolean;
-  allowParsedInput: boolean;
+  allowJsonInput?: {
+    contentFields?: string[]; // Will use whole JSON if not specified
+    separator?: string;
+  };
 };
