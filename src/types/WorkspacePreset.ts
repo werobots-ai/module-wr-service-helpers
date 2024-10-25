@@ -147,6 +147,12 @@ export type AiParserConfig = {
   rules: string[];
 } & AiParserProcessConfig;
 
+type RecuresiveTrue =
+  | true
+  | {
+      [key: string]: RecuresiveTrue | RecuresiveTrue[];
+    };
+
 export type WorkspacePreset = {
   name: string;
   label: string;
@@ -155,8 +161,28 @@ export type WorkspacePreset = {
   autoIndex: AutoIndexConfig[] | null;
   aiDocumentParser: AiParserConfig | null;
   hasFileStorage: boolean;
-  allowJsonInput?: {
-    contentFields?: string[]; // Will use whole JSON if not specified
-    separator?: string;
+  allowJsonInput?: (
+    | {
+        asJsonFile: true;
+        asJsonPayload: boolean;
+      }
+    | {
+        asJsonFile: boolean;
+        asJsonPayload: true;
+      }
+  ) & {
+    contentGenerator?:
+      | {
+          type: "fullJson" | "fullJsonAsYaml" | "fullJsonAsMarkdown";
+          fields?: RecuresiveTrue;
+        }
+      | {
+          type: "custom";
+          [key: string]: any;
+        };
+    existingEmbeddings?: {
+      fieldName: string;
+      embedderConfig: EmbedderConfig;
+    }[];
   };
 };
