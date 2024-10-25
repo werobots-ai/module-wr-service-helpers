@@ -150,7 +150,7 @@ export type AiParserConfig = {
 type RecuresiveTrue =
   | true
   | {
-      [key: string]: RecuresiveTrue | RecuresiveTrue[];
+      [key: string]: RecuresiveTrue;
     };
 
 export type WorkspacePreset = {
@@ -181,7 +181,7 @@ export type WorkspacePreset = {
           [key: string]: any;
         };
     existingEmbeddings?: {
-      fieldName: string;
+      fieldPath: string[];
       embedderConfig: EmbedderConfig;
     }[];
   };

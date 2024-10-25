@@ -111,7 +111,7 @@ export type AiParserConfig = {
     rules: string[];
 } & AiParserProcessConfig;
 type RecuresiveTrue = true | {
-    [key: string]: RecuresiveTrue | RecuresiveTrue[];
+    [key: string]: RecuresiveTrue;
 };
 export type WorkspacePreset = {
     name: string;
@@ -136,7 +136,7 @@ export type WorkspacePreset = {
             [key: string]: any;
         };
         existingEmbeddings?: {
-            fieldName: string;
+            fieldPath: string[];
             embedderConfig: EmbedderConfig;
         }[];
     };
