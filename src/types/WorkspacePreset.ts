@@ -32,13 +32,22 @@ export type AiParserLeafField = BaseField &
         searchable: boolean;
         filterable: boolean;
       } & (
-        | { multiValue: false; examples: (string | null)[] | (number | null)[] } // Single value examples
+        | {
+            multiValue: false;
+            examples:
+              | (string | null)[]
+              | (number | null)[]
+              | (boolean | null)[];
+          } // Single value examples
         | {
             multiValue: true;
-            examples: (string | null)[][] | (number | null)[][];
+            examples:
+              | (string | null)[][]
+              | (number | null)[][]
+              | (boolean | null)[][];
           }
-      ))
-  ); // Multi value examples
+      )) // Multi value examples
+  );
 
 export type AiParserNestedField = BaseField & {
   // Nested fields have 'fields' property

@@ -27,10 +27,10 @@ export type AiParserLeafField = BaseField & (({
     filterable: boolean;
 } & ({
     multiValue: false;
-    examples: (string | null)[] | (number | null)[];
+    examples: (string | null)[] | (number | null)[] | (boolean | null)[];
 } | {
     multiValue: true;
-    examples: (string | null)[][] | (number | null)[][];
+    examples: (string | null)[][] | (number | null)[][] | (boolean | null)[][];
 })));
 export type AiParserNestedField = BaseField & {
     fields: Record<string, AiParserField>;
