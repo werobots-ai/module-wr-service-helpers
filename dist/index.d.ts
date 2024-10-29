@@ -7,6 +7,7 @@ export * from "./utils/validateEnv";
 export * from "./utils/requireEnv";
 export * from "./utils/invokeService";
 export * from "./utils/getAiParserConfig";
+export * from "./utils/hashPassword";
 export * from "./types/AuthData";
 export * from "./types/WorkspacePreset";
 export * from "./middleware/errorHandler";

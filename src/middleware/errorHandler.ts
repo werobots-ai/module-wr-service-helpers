@@ -40,5 +40,10 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     return;
   }
 
+  if (/required|missing|invalid|bad request|validation/i.test(err.message)) {
+    res.status(400).send(err.message);
+    return;
+  }
+
   res.status(500).send(`Internal Server Error: ${err.message} ${err.stack}`);
 };
