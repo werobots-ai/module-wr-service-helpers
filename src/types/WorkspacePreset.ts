@@ -46,8 +46,8 @@ export type AiParserLeafField = BaseField &
               | (number | null)[][]
               | (boolean | null)[][];
           }
-      )) // Multi value examples
-  );
+      ))
+  ); // Multi value examples
 
 export type AiParserNestedField = BaseField & {
   // Nested fields have 'fields' property
@@ -170,6 +170,11 @@ export type WorkspacePreset = {
   autoIndex: AutoIndexConfig[] | null;
   aiDocumentParser: AiParserConfig | null;
   hasFileStorage: boolean;
+  requestMetaFieldsOnCreate?: {
+    name: string;
+    label: string;
+    type: "string" | "number" | "date" | "boolean" | "password";
+  }[];
   allowJsonInput?: (
     | {
         asJsonFile: true;
