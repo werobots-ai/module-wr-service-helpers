@@ -20,7 +20,7 @@ __exportStar(require("./user-helpers/hasFullApiAccess"), exports);
 __exportStar(require("./user-helpers/authSingleton"), exports);
 __exportStar(require("./utils/generateUniqueId"), exports);
 __exportStar(require("./utils/validateEnv"), exports);
-__exportStar(require("./utils/objectToText"), exports);
+__exportStar(require("./utils/mapObject"), exports);
 __exportStar(require("./utils/requireEnv"), exports);
 __exportStar(require("./utils/invokeService"), exports);
 __exportStar(require("./utils/getAiParserConfig"), exports);

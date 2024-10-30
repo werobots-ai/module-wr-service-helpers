@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { mapObject, getSourceValue } from "./objectToText";
+import { mapObject, getSourceValue } from "./mapObject";
 
 // Sample methods and mock data to use in tests
 const sampleSource = {
