@@ -72,8 +72,11 @@ const sampleSource = {
         });
         node_assert_1.default.strictEqual(result, "- **simple:** simpleValue\n- **deepNested:** deepValue\n");
     });
+    (0, node_test_1.it)("should throw error for invalid method", () => {
+        node_assert_1.default.throws(() => (0, mapObject_1.getSourceValue)(sampleSource, { method: "invalidMethod" }), /Method "invalidMethod" not found/);
+    });
     (0, node_test_1.it)("should throw an error for invalid sourceConfig", () => {
-        node_assert_1.default.throws(() => (0, mapObject_1.getSourceValue)(sampleSource, { invalid: "config" }), Error);
+        node_assert_1.default.throws(() => (0, mapObject_1.getSourceValue)(sampleSource, { invalid: "config" }), /Invalid sourceConfig: {"invalid":"config"}/);
     });
 });
 (0, node_test_1.describe)("mapObject", () => {

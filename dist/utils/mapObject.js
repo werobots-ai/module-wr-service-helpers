@@ -44,7 +44,10 @@ const getSourceValue = (source, sourceConfig) => {
             ? (0, json2markdown_1.jsonToMarkdown)(mappedObject)
             : JSON.stringify(mappedObject, null, 2);
     }
-    else if (sourceConfig.method && methods[sourceConfig.method]) {
+    else if (sourceConfig.method) {
+        if (!(sourceConfig.method in methods)) {
+            throw new Error(`Method "${sourceConfig.method}" not found.`);
+        }
         // Call method if it exists in the methods map
         return methods[sourceConfig.method]();
     }

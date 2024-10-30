@@ -81,10 +81,17 @@ describe("getSourceValue", () => {
     );
   });
 
+  it("should throw error for invalid method", () => {
+    assert.throws(
+      () => getSourceValue(sampleSource, { method: "invalidMethod" } as any),
+      /Method "invalidMethod" not found/
+    );
+  });
+
   it("should throw an error for invalid sourceConfig", () => {
     assert.throws(
       () => getSourceValue(sampleSource, { invalid: "config" } as any),
-      Error
+      /Invalid sourceConfig: {"invalid":"config"}/
     );
   });
 });
