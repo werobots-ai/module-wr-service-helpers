@@ -4,6 +4,7 @@ export * from "./user-helpers/hasFullApiAccess";
 export * from "./user-helpers/authSingleton";
 export * from "./utils/generateUniqueId";
 export * from "./utils/validateEnv";
+export * from "./utils/objectToText";
 export * from "./utils/requireEnv";
 export * from "./utils/invokeService";
 export * from "./utils/getAiParserConfig";

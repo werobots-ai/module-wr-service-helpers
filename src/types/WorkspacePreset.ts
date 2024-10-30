@@ -156,11 +156,32 @@ export type AiParserConfig = {
   rules: string[];
 } & AiParserProcessConfig;
 
-type RecuresiveTrue =
-  | true
+export type FieldSource =
+  | { sourceField: string }
+  | { value: string | number | boolean | null | undefined }
+  | { method: "currentDateTime"; format?: string }
+  | { method: "json" | "jsonAsMarkdown"; mappings?: FieldMappingRule[] }
+  | { method: "concat"; parts: FieldSource[] };
+
+export type FieldMappingRule = FieldSource & {
+  targetField: string;
+};
+
+export type JsonInputConfig = (
   | {
-      [key: string]: RecuresiveTrue;
-    };
+      asJsonFile: true;
+      asJsonPayload: boolean;
+    }
+  | {
+      asJsonFile: boolean;
+      asJsonPayload: true;
+    }
+) & {
+  parsers: {
+    targetIndexName: string;
+    mappings?: FieldMappingRule[];
+  }[];
+};
 
 export type WorkspacePreset = {
   name: string;
@@ -175,28 +196,5 @@ export type WorkspacePreset = {
     label: string;
     type: "string" | "number" | "date" | "boolean" | "password";
   }[];
-  allowJsonInput?: (
-    | {
-        asJsonFile: true;
-        asJsonPayload: boolean;
-      }
-    | {
-        asJsonFile: boolean;
-        asJsonPayload: true;
-      }
-  ) & {
-    contentGenerator?:
-      | {
-          type: "fullJson" | "fullJsonAsYaml" | "fullJsonAsMarkdown";
-          fields?: RecuresiveTrue;
-        }
-      | {
-          type: "custom";
-          [key: string]: any;
-        };
-    existingEmbeddings?: {
-      fieldPath: string[];
-      embedderConfig: EmbedderConfig;
-    }[];
-  };
+  allowJsonInput?: JsonInputConfig;
 };
