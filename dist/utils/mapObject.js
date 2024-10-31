@@ -9,10 +9,18 @@ const methods = {
 };
 // Retrieve a nested value using dot notation
 const getNestedValue = (obj, path) => {
+    if (path === "")
+        return obj;
     return path.split(".").reduce((acc, part) => acc?.[part], obj);
 };
 // Set a nested value using dot notation
 const setNestedValue = (obj, path, value) => {
+    if (path === "") {
+        // clear the object and set the value
+        Object.keys(obj).forEach((key) => delete obj[key]);
+        Object.assign(obj, value);
+        return;
+    }
     const keys = path.split(".");
     let current = obj;
     for (let i = 0; i < keys.length - 1; i++) {

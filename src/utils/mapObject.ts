@@ -10,6 +10,7 @@ const methods = {
 
 // Retrieve a nested value using dot notation
 const getNestedValue = (obj: Record<string, any>, path: string): any => {
+  if (path === "") return obj;
   return path.split(".").reduce((acc, part) => acc?.[part], obj);
 };
 
@@ -19,6 +20,13 @@ const setNestedValue = (
   path: string,
   value: any
 ): void => {
+  if (path === "") {
+    // clear the object and set the value
+    Object.keys(obj).forEach((key) => delete obj[key]);
+    Object.assign(obj, value);
+    return;
+  }
+
   const keys = path.split(".");
   let current = obj;
 
