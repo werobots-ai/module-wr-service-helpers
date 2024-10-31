@@ -4,8 +4,10 @@ exports.mapObject = exports.getSourceValue = void 0;
 const json2markdown_1 = require("./json2markdown");
 // Helper function to format DateTime if needed
 const getCurrentDateTime = () => new Date().toISOString();
+const deleteMethod = () => undefined;
 const methods = {
     currentDateTime: getCurrentDateTime,
+    delete: deleteMethod,
 };
 // Retrieve a nested value using dot notation
 const getNestedValue = (obj, path) => {

@@ -123,6 +123,8 @@ export type FieldSource = {
 } | {
     method: "concat";
     parts: FieldSource[];
+} | {
+    method: "delete";
 };
 export type FieldMappingRule = FieldSource & {
     targetField: string;

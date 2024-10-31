@@ -3,9 +3,11 @@ import { jsonToMarkdown } from "./json2markdown";
 
 // Helper function to format DateTime if needed
 const getCurrentDateTime = (): string => new Date().toISOString();
+const deleteMethod = (): undefined => undefined;
 
 const methods = {
   currentDateTime: getCurrentDateTime,
+  delete: deleteMethod,
 };
 
 // Retrieve a nested value using dot notation
