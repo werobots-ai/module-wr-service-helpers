@@ -137,7 +137,7 @@ export type JsonInputConfig = ({
     parsers: {
         targetIndexName: string;
         mappings?: FieldMappingRule[];
-        generateEmbeddingsFrom?: FieldSource[];
+        generateEmbeddingsFrom?: FieldSource;
     }[];
 };
 export type WorkspacePreset = {
