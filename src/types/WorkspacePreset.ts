@@ -180,6 +180,7 @@ export type JsonInputConfig = (
   parsers: {
     targetIndexName: string;
     mappings?: FieldMappingRule[];
+    generateEmbeddingsFrom?: FieldSource[];
   }[];
 };
 
