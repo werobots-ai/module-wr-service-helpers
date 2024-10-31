@@ -3,8 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mapObject = exports.getSourceValue = void 0;
 const json2markdown_1 = require("./json2markdown");
 // Helper function to format DateTime if needed
-const getCurrentDateTime = () => new Date().toISOString();
-const deleteMethod = () => undefined;
+const getCurrentDateTime = (_) => new Date().toISOString();
+const deleteMethod = ({ targetField, mappedObject, }) => {
+    if (!targetField || !mappedObject)
+        return;
+    const targetParts = targetField.split(".");
+    let current = mappedObject;
+    for (let i = 0; i < targetParts.length - 1; i++) {
+        current = current[targetParts[i]];
+    }
+    delete current[targetParts[targetParts.length - 1]];
+};
 const methods = {
     currentDateTime: getCurrentDateTime,
     delete: deleteMethod,
@@ -33,7 +42,7 @@ const setNestedValue = (obj, path, value) => {
     current[keys[keys.length - 1]] = value;
 };
 // Unified function to retrieve a value based on FieldSource configuration
-const getSourceValue = (source, sourceConfig) => {
+const getSourceValue = (source, sourceConfig, targetField, mappedObject) => {
     if ("sourceField" in sourceConfig) {
         return getNestedValue(source, sourceConfig.sourceField);
     }
@@ -59,7 +68,7 @@ const getSourceValue = (source, sourceConfig) => {
             throw new Error(`Method "${sourceConfig.method}" not found.`);
         }
         // Call method if it exists in the methods map
-        return methods[sourceConfig.method]();
+        return methods[sourceConfig.method]({ targetField, mappedObject });
     }
     throw new Error(`Invalid sourceConfig: ${JSON.stringify(sourceConfig)}`);
 };
@@ -69,7 +78,7 @@ const mapObject = (source, rules) => {
     const mappedObject = {};
     for (const rule of rules) {
         const { targetField, ...sourceConfig } = rule;
-        const value = (0, exports.getSourceValue)(source, sourceConfig);
+        const value = (0, exports.getSourceValue)(source, sourceConfig, targetField, mappedObject);
         if (value !== undefined) {
             setNestedValue(mappedObject, targetField, value);
         }

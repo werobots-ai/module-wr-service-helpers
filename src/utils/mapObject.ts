@@ -2,8 +2,27 @@ import { FieldMappingRule, FieldSource } from "../types/WorkspacePreset";
 import { jsonToMarkdown } from "./json2markdown";
 
 // Helper function to format DateTime if needed
-const getCurrentDateTime = (): string => new Date().toISOString();
-const deleteMethod = (): undefined => undefined;
+const getCurrentDateTime = (_: {
+  targetField?: string;
+  mappedObject?: Record<string, any>;
+}): string => new Date().toISOString();
+
+const deleteMethod = ({
+  targetField,
+  mappedObject,
+}: {
+  targetField?: string;
+  mappedObject?: Record<string, any>;
+}): undefined => {
+  if (!targetField || !mappedObject) return;
+
+  const targetParts = targetField.split(".");
+  let current = mappedObject;
+  for (let i = 0; i < targetParts.length - 1; i++) {
+    current = current[targetParts[i]];
+  }
+  delete current[targetParts[targetParts.length - 1]];
+};
 
 const methods = {
   currentDateTime: getCurrentDateTime,
@@ -44,7 +63,9 @@ const setNestedValue = (
 // Unified function to retrieve a value based on FieldSource configuration
 export const getSourceValue = (
   source: Record<string, any>,
-  sourceConfig: FieldSource
+  sourceConfig: FieldSource,
+  targetField?: string,
+  mappedObject?: Record<string, any>
 ): any => {
   if ("sourceField" in sourceConfig) {
     return getNestedValue(source, sourceConfig.sourceField);
@@ -70,7 +91,7 @@ export const getSourceValue = (
     }
 
     // Call method if it exists in the methods map
-    return methods[sourceConfig.method]();
+    return methods[sourceConfig.method]({ targetField, mappedObject });
   }
 
   throw new Error(`Invalid sourceConfig: ${JSON.stringify(sourceConfig)}`);
@@ -85,7 +106,12 @@ export const mapObject = (
 
   for (const rule of rules) {
     const { targetField, ...sourceConfig } = rule;
-    const value = getSourceValue(source, sourceConfig);
+    const value = getSourceValue(
+      source,
+      sourceConfig,
+      targetField,
+      mappedObject
+    );
     if (value !== undefined) {
       setNestedValue(mappedObject, targetField, value);
     }
