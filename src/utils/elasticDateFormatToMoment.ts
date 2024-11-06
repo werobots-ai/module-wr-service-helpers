@@ -1,3 +1,6 @@
+import e from "express";
+import { date } from "zod";
+
 const dateFormatMap = {
   // Epoch formats
   epoch_millis: "x",
@@ -105,7 +108,13 @@ export const mapElasticDateFormatToMomentString = (
   return (
     ([] as string[]).concat(
       dateFormatMap[elasticDateFormat as keyof typeof dateFormatMap]
-    )[0] || elasticDateFormat
+    )[0] ||
+    ([] as string[]).concat(
+      dateFormatMap[
+        elasticDateFormat.toLowerCase() as keyof typeof dateFormatMap
+      ]
+    )[0] ||
+    elasticDateFormat
   );
 };
 
@@ -113,16 +122,24 @@ export const mapElasticDateFormatToMomentArray = (
   elasticDateFormat: string
 ): string[] => {
   return ([] as string[]).concat(
-    dateFormatMap[elasticDateFormat as keyof typeof dateFormatMap]
+    dateFormatMap[elasticDateFormat as keyof typeof dateFormatMap] ||
+      dateFormatMap[
+        elasticDateFormat.toLowerCase() as keyof typeof dateFormatMap
+      ] ||
+      elasticDateFormat
   );
 };
 
 export const mapElasticDateFormatToPromptString = (
   elasticDateFormat: string
 ): string => {
-  return (
-    ([] as string[]).concat(
-      dateFormatMap[elasticDateFormat as keyof typeof dateFormatMap]
-    ) || [elasticDateFormat]
-  ).join(" or ");
+  return ([] as string[])
+    .concat(
+      dateFormatMap[elasticDateFormat as keyof typeof dateFormatMap] ||
+        dateFormatMap[
+          elasticDateFormat.toLowerCase() as keyof typeof dateFormatMap
+        ] ||
+        elasticDateFormat
+    )
+    .join(" or ");
 };

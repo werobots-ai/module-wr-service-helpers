@@ -93,14 +93,22 @@ const dateFormatMap = {
     strict_t_time_no_millis: "[T]HH:mm:ssZ",
 };
 const mapElasticDateFormatToMomentString = (elasticDateFormat) => {
-    return ([].concat(dateFormatMap[elasticDateFormat])[0] || elasticDateFormat);
+    return ([].concat(dateFormatMap[elasticDateFormat])[0] ||
+        [].concat(dateFormatMap[elasticDateFormat.toLowerCase()])[0] ||
+        elasticDateFormat);
 };
 exports.mapElasticDateFormatToMomentString = mapElasticDateFormatToMomentString;
 const mapElasticDateFormatToMomentArray = (elasticDateFormat) => {
-    return [].concat(dateFormatMap[elasticDateFormat]);
+    return [].concat(dateFormatMap[elasticDateFormat] ||
+        dateFormatMap[elasticDateFormat.toLowerCase()] ||
+        elasticDateFormat);
 };
 exports.mapElasticDateFormatToMomentArray = mapElasticDateFormatToMomentArray;
 const mapElasticDateFormatToPromptString = (elasticDateFormat) => {
-    return ([].concat(dateFormatMap[elasticDateFormat]) || [elasticDateFormat]).join(" or ");
+    return []
+        .concat(dateFormatMap[elasticDateFormat] ||
+        dateFormatMap[elasticDateFormat.toLowerCase()] ||
+        elasticDateFormat)
+        .join(" or ");
 };
 exports.mapElasticDateFormatToPromptString = mapElasticDateFormatToPromptString;
