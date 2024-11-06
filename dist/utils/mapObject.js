@@ -41,34 +41,77 @@ const setNestedValue = (obj, path, value) => {
     }
     current[keys[keys.length - 1]] = value;
 };
+const flattenObjOrArr = (obj, path, keys, separator) => {
+    console.debug(`Flattening object at path: ${path}`);
+    console.debug(`typeof obj: ${typeof obj}`);
+    if (typeof obj === "object") {
+        if (Array.isArray(obj))
+            console.debug("Object is an array");
+        if (obj === null)
+            console.debug("Object is null");
+        else
+            console.debug(`Object keys: ${Object.keys(obj)}`);
+    }
+    if (!path) {
+        console.debug("Leaf path reached. Flattening array.");
+        if (!obj)
+            return obj;
+        if (!Array.isArray(obj)) {
+            throw new Error(`Method "flattenObject" requires the parent field to be an array. Requested path: "${path}" on ${typeof obj} with value: ${JSON.stringify(obj)}`);
+        }
+        console.debug("Flattening array: ", obj);
+        for (let i = 0; i < obj.length; i += 1) {
+            obj[i] = obj[i]
+                ? keys.map((key) => obj[i][key]).join(separator || "")
+                : null;
+        }
+        console.debug("Flattened array joined: ", obj);
+        return;
+    }
+    const pathParts = path.split(".");
+    if (Array.isArray(obj)) {
+        obj.forEach((item) => flattenObjOrArr(item, path, keys, separator));
+        return;
+    }
+    const nextPath = pathParts.slice(1).join(".");
+    flattenObjOrArr(obj[pathParts[0]], nextPath, keys, separator);
+};
 // Unified function to retrieve a value based on FieldSource configuration
 const getSourceValue = (source, sourceConfig, targetField, mappedObject) => {
-    if ("sourceField" in sourceConfig) {
+    if ("method" in sourceConfig && sourceConfig.method) {
+        if (sourceConfig.method === "flattenObject") {
+            console.debug("flattening..");
+            flattenObjOrArr(mappedObject, targetField, sourceConfig.keys, sourceConfig.separator);
+            return;
+        }
+        else if (sourceConfig.method === "concat") {
+            // Process each part in the concat array and join results
+            return sourceConfig.parts
+                .map((part) => (0, exports.getSourceValue)(source, part))
+                .join("");
+        }
+        else if (sourceConfig.method === "json" ||
+            sourceConfig.method === "jsonAsMarkdown") {
+            // Map the object based on provided mappings and return as JSON or Markdown
+            const mappedObject = (0, exports.mapObject)(source, sourceConfig.mappings || []);
+            return sourceConfig.method === "jsonAsMarkdown"
+                ? (0, json2markdown_1.jsonToMarkdown)(mappedObject)
+                : JSON.stringify(mappedObject, null, 2);
+        }
+        else if (sourceConfig.method) {
+            if (!(sourceConfig.method in methods)) {
+                throw new Error(`Method "${sourceConfig.method}" not found.`);
+            }
+            // Call method if it exists in the methods map
+            return methods[sourceConfig.method]({ targetField, mappedObject });
+        }
+        //
+    }
+    else if ("sourceField" in sourceConfig) {
         return getNestedValue(source, sourceConfig.sourceField);
     }
     else if ("value" in sourceConfig) {
         return sourceConfig.value;
-    }
-    else if (sourceConfig.method === "concat") {
-        // Process each part in the concat array and join results
-        return sourceConfig.parts
-            .map((part) => (0, exports.getSourceValue)(source, part))
-            .join("");
-    }
-    else if (sourceConfig.method === "json" ||
-        sourceConfig.method === "jsonAsMarkdown") {
-        // Map the object based on provided mappings and return as JSON or Markdown
-        const mappedObject = (0, exports.mapObject)(source, sourceConfig.mappings || []);
-        return sourceConfig.method === "jsonAsMarkdown"
-            ? (0, json2markdown_1.jsonToMarkdown)(mappedObject)
-            : JSON.stringify(mappedObject, null, 2);
-    }
-    else if (sourceConfig.method) {
-        if (!(sourceConfig.method in methods)) {
-            throw new Error(`Method "${sourceConfig.method}" not found.`);
-        }
-        // Call method if it exists in the methods map
-        return methods[sourceConfig.method]({ targetField, mappedObject });
     }
     throw new Error(`Invalid sourceConfig: ${JSON.stringify(sourceConfig)}`);
 };

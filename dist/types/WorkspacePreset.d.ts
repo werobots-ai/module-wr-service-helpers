@@ -125,6 +125,10 @@ export type FieldSource = {
     parts: FieldSource[];
 } | {
     method: "delete";
+} | {
+    method: "flattenObject";
+    keys: string[];
+    separator?: string;
 };
 export type FieldMappingRule = FieldSource & {
     targetField: string;
