@@ -60,6 +60,43 @@ const setNestedValue = (
   current[keys[keys.length - 1]] = value;
 };
 
+const flattenObjOrArr = (
+  obj: Record<string, any> | unknown[],
+  path: string,
+  keys: string[],
+  separator?: string
+): any => {
+  if (!path) {
+    if (!obj) return obj;
+
+    if (!Array.isArray(obj)) {
+      throw new Error(
+        `Method "flattenObject" requires the parent field to be an array. Requested path: "${path}" on ${typeof obj} with value: ${JSON.stringify(
+          obj
+        )}`
+      );
+    }
+
+    for (let i = 0; i < obj.length; i += 1) {
+      obj[i] = obj[i]
+        ? keys.map((key) => obj[i][key]).join(separator || "")
+        : null;
+    }
+
+    return;
+  }
+
+  const pathParts = path.split(".");
+
+  if (Array.isArray(obj)) {
+    obj.forEach((item) => flattenObjOrArr(item, path, keys, separator));
+    return;
+  }
+
+  const nextPath = pathParts.slice(1).join(".");
+  flattenObjOrArr(obj[pathParts[0]], nextPath, keys, separator);
+};
+
 // Unified function to retrieve a value based on FieldSource configuration
 export const getSourceValue = (
   source: Record<string, any>,
@@ -67,31 +104,42 @@ export const getSourceValue = (
   targetField?: string,
   mappedObject?: Record<string, any>
 ): any => {
-  if ("sourceField" in sourceConfig) {
+  if ("method" in sourceConfig && sourceConfig.method) {
+    if (sourceConfig.method === "flattenObject") {
+      flattenObjOrArr(
+        mappedObject!,
+        targetField!,
+        sourceConfig.keys,
+        sourceConfig.separator
+      );
+      return;
+    } else if (sourceConfig.method === "concat") {
+      // Process each part in the concat array and join results
+      return sourceConfig.parts
+        .map((part) => getSourceValue(source, part))
+        .join("");
+    } else if (
+      sourceConfig.method === "json" ||
+      sourceConfig.method === "jsonAsMarkdown"
+    ) {
+      // Map the object based on provided mappings and return as JSON or Markdown
+      const mappedObject = mapObject(source, sourceConfig.mappings || []);
+      return sourceConfig.method === "jsonAsMarkdown"
+        ? jsonToMarkdown(mappedObject)
+        : JSON.stringify(mappedObject, null, 2);
+    } else if (sourceConfig.method) {
+      if (!(sourceConfig.method in methods)) {
+        throw new Error(`Method "${sourceConfig.method}" not found.`);
+      }
+
+      // Call method if it exists in the methods map
+      return methods[sourceConfig.method]({ targetField, mappedObject });
+    }
+    //
+  } else if ("sourceField" in sourceConfig) {
     return getNestedValue(source, sourceConfig.sourceField);
   } else if ("value" in sourceConfig) {
     return sourceConfig.value;
-  } else if (sourceConfig.method === "concat") {
-    // Process each part in the concat array and join results
-    return sourceConfig.parts
-      .map((part) => getSourceValue(source, part))
-      .join("");
-  } else if (
-    sourceConfig.method === "json" ||
-    sourceConfig.method === "jsonAsMarkdown"
-  ) {
-    // Map the object based on provided mappings and return as JSON or Markdown
-    const mappedObject = mapObject(source, sourceConfig.mappings || []);
-    return sourceConfig.method === "jsonAsMarkdown"
-      ? jsonToMarkdown(mappedObject)
-      : JSON.stringify(mappedObject, null, 2);
-  } else if (sourceConfig.method) {
-    if (!(sourceConfig.method in methods)) {
-      throw new Error(`Method "${sourceConfig.method}" not found.`);
-    }
-
-    // Call method if it exists in the methods map
-    return methods[sourceConfig.method]({ targetField, mappedObject });
   }
 
   throw new Error(`Invalid sourceConfig: ${JSON.stringify(sourceConfig)}`);

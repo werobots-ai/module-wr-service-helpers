@@ -42,30 +42,17 @@ const setNestedValue = (obj, path, value) => {
     current[keys[keys.length - 1]] = value;
 };
 const flattenObjOrArr = (obj, path, keys, separator) => {
-    console.debug(`Flattening object at path: ${path}`);
-    console.debug(`typeof obj: ${typeof obj}`);
-    if (typeof obj === "object") {
-        if (Array.isArray(obj))
-            console.debug("Object is an array");
-        if (obj === null)
-            console.debug("Object is null");
-        else
-            console.debug(`Object keys: ${Object.keys(obj)}`);
-    }
     if (!path) {
-        console.debug("Leaf path reached. Flattening array.");
         if (!obj)
             return obj;
         if (!Array.isArray(obj)) {
             throw new Error(`Method "flattenObject" requires the parent field to be an array. Requested path: "${path}" on ${typeof obj} with value: ${JSON.stringify(obj)}`);
         }
-        console.debug("Flattening array: ", obj);
         for (let i = 0; i < obj.length; i += 1) {
             obj[i] = obj[i]
                 ? keys.map((key) => obj[i][key]).join(separator || "")
                 : null;
         }
-        console.debug("Flattened array joined: ", obj);
         return;
     }
     const pathParts = path.split(".");
@@ -80,7 +67,6 @@ const flattenObjOrArr = (obj, path, keys, separator) => {
 const getSourceValue = (source, sourceConfig, targetField, mappedObject) => {
     if ("method" in sourceConfig && sourceConfig.method) {
         if (sourceConfig.method === "flattenObject") {
-            console.debug("flattening..");
             flattenObjOrArr(mappedObject, targetField, sourceConfig.keys, sourceConfig.separator);
             return;
         }

@@ -162,7 +162,12 @@ export type FieldSource =
   | { method: "currentDateTime"; format?: string }
   | { method: "json" | "jsonAsMarkdown"; mappings?: FieldMappingRule[] }
   | { method: "concat"; parts: FieldSource[] }
-  | { method: "delete" };
+  | { method: "delete" }
+  | {
+      method: "flattenObject";
+      keys: string[];
+      separator?: string;
+    };
 
 export type FieldMappingRule = FieldSource & {
   targetField: string;
