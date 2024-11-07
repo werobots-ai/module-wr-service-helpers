@@ -135,10 +135,12 @@ export type FieldMappingRule = FieldSource & {
 };
 export type JsonInputConfig = ({
     asJsonFile: true;
-    asJsonPayload: boolean;
+    asJsonPayload?: false;
 } | {
     asJsonFile: boolean;
     asJsonPayload: true;
+    filenameSource: FieldSource;
+    savePayloadAsJsonFile: boolean;
 }) & {
     parsers: {
         targetIndexName: string;

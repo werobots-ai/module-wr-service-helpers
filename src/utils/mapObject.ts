@@ -107,7 +107,7 @@ export const getSourceValue = (
   if ("method" in sourceConfig && sourceConfig.method) {
     if (sourceConfig.method === "flattenObject") {
       flattenObjOrArr(
-        mappedObject!,
+        mappedObject || {},
         targetField!,
         sourceConfig.keys,
         sourceConfig.separator
@@ -133,7 +133,10 @@ export const getSourceValue = (
       }
 
       // Call method if it exists in the methods map
-      return methods[sourceConfig.method]({ targetField, mappedObject });
+      return methods[sourceConfig.method]({
+        targetField,
+        mappedObject: mappedObject || {},
+      });
     }
     //
   } else if ("sourceField" in sourceConfig) {

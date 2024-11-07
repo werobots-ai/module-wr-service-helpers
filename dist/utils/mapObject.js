@@ -67,7 +67,7 @@ const flattenObjOrArr = (obj, path, keys, separator) => {
 const getSourceValue = (source, sourceConfig, targetField, mappedObject) => {
     if ("method" in sourceConfig && sourceConfig.method) {
         if (sourceConfig.method === "flattenObject") {
-            flattenObjOrArr(mappedObject, targetField, sourceConfig.keys, sourceConfig.separator);
+            flattenObjOrArr(mappedObject || {}, targetField, sourceConfig.keys, sourceConfig.separator);
             return;
         }
         else if (sourceConfig.method === "concat") {
@@ -89,7 +89,10 @@ const getSourceValue = (source, sourceConfig, targetField, mappedObject) => {
                 throw new Error(`Method "${sourceConfig.method}" not found.`);
             }
             // Call method if it exists in the methods map
-            return methods[sourceConfig.method]({ targetField, mappedObject });
+            return methods[sourceConfig.method]({
+                targetField,
+                mappedObject: mappedObject || {},
+            });
         }
         //
     }
