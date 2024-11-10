@@ -12,6 +12,7 @@ export * from "./utils/hashPassword";
 export * from "./utils/elasticDateFormatToMoment";
 export * from "./types/AuthData";
 export * from "./types/WorkspacePreset";
+export * from "./types/PollJob";
 export * from "./middleware/errorHandler";
 export * from "./middleware/validation";
 export * from "./middleware/sharepointAuth";

@@ -28,6 +28,7 @@ __exportStar(require("./utils/hashPassword"), exports);
 __exportStar(require("./utils/elasticDateFormatToMoment"), exports);
 __exportStar(require("./types/AuthData"), exports);
 __exportStar(require("./types/WorkspacePreset"), exports);
+__exportStar(require("./types/PollJob"), exports);
 __exportStar(require("./middleware/errorHandler"), exports);
 __exportStar(require("./middleware/validation"), exports);
 __exportStar(require("./middleware/sharepointAuth"), exports);
