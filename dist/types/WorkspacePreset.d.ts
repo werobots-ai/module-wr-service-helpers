@@ -157,11 +157,18 @@ export type WorkspacePreset = {
     autoIndex: AutoIndexConfig[] | null;
     aiDocumentParser: AiParserConfig | null;
     hasFileStorage: boolean;
-    requestMetaFieldsOnCreate?: {
+    requestMetaFieldsOnCreate?: ({
         name: string;
         label: string;
+    } & ({
         type: "string" | "number" | "date" | "boolean" | "password";
-    }[];
+    } | {
+        type: "select";
+        options: {
+            value: string;
+            label: string;
+        }[];
+    }))[];
     allowJsonInput?: JsonInputConfig;
 };
 export {};
