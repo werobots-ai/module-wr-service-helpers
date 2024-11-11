@@ -192,6 +192,11 @@ export type JsonInputConfig = (
   }[];
 };
 
+export type QuickChatAction = {
+  id: string;
+  message: string;
+};
+
 export type WorkspacePreset = {
   name: string;
   label: string;
@@ -214,4 +219,5 @@ export type WorkspacePreset = {
       }
   ))[];
   allowJsonInput?: JsonInputConfig;
+  quickChatActions?: QuickChatAction[];
 };
