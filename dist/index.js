@@ -25,6 +25,7 @@ __exportStar(require("./utils/requireEnv"), exports);
 __exportStar(require("./utils/invokeService"), exports);
 __exportStar(require("./utils/getAiParserConfig"), exports);
 __exportStar(require("./utils/hashPassword"), exports);
+__exportStar(require("./utils/json2markdown"), exports);
 __exportStar(require("./utils/elasticDateFormatToMoment"), exports);
 __exportStar(require("./types/AuthData"), exports);
 __exportStar(require("./types/WorkspacePreset"), exports);
