@@ -18,12 +18,12 @@ class Logger {
   }
 
   public init() {
-    console.log("Initializing logger");
+    // console.log("Initializing logger");
 
     this.patchConsole();
     this.catchNodeExceptions();
 
-    console.log("Logger initialized"); // this will log "INFO: Logger initialized"
+    // console.log("Logger initialized"); // this will log "INFO: Logger initialized"
   }
 
   public patchConsole() {
@@ -56,7 +56,7 @@ class Logger {
   }
 
   public log(...args: any[]) {
-    this.oldConsole.log(`INFO: `, ...args.map(this.argMapper));
+    this.oldConsole.log(`LOG: `, ...args.map(this.argMapper));
   }
 
   public info(...args: any[]) {
@@ -64,15 +64,15 @@ class Logger {
   }
 
   public warn(...args: any[]) {
-    this.oldConsole.warn(`INFO: WARN: `, ...args.map(this.argMapper));
+    this.oldConsole.warn(`WARN: `, ...args.map(this.argMapper));
   }
 
   public debug(...args: any[]) {
-    this.oldConsole.debug(`INFO: DEBUG: `, ...args.map(this.argMapper));
+    this.oldConsole.debug(`DEBUG: `, ...args.map(this.argMapper));
   }
 
   public trace(...args: any[]) {
-    this.oldConsole.trace(`INFO: TRACE: `, ...args.map(this.argMapper));
+    this.oldConsole.trace(`TRACE: `, ...args.map(this.argMapper));
   }
 
   public error(...args: any[]) {
