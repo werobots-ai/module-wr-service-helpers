@@ -21,6 +21,8 @@ jobs:
       - run: npm install typescript
       - name: Build
         run: npm run build
-      - run: npm publish
+      - name: Copy package.json
+        run: cp -rf package.json dist
+      - run: cd dist && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
