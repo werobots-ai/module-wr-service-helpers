@@ -175,5 +175,8 @@ export type WorkspacePreset = {
     }))[];
     allowJsonInput?: JsonInputConfig;
     quickChatActions?: QuickChatAction[];
+    markups?: {
+        workspaceRecord?: string;
+    };
 };
 export {};
