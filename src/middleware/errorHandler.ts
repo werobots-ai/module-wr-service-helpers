@@ -1,6 +1,6 @@
 import e, { ErrorRequestHandler } from "express";
 
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(
     `API Error:`,
     {
@@ -47,3 +47,5 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
   res.status(500).send(`Internal Server Error: ${err.message} ${err.stack}`);
 };
+
+export default errorHandler;
