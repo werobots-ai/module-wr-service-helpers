@@ -1,13 +1,12 @@
 {
   "name": "@werobots-ai/module-wr-service-helpers",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test tsx src/**/*.test.ts",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "prepare": "husky",
     "test:only": "NODE_ENV=test tsx --test-only src/**/*.test.ts"
   },
   "repository": {
@@ -19,11 +18,6 @@
   },
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run build && git add ./dist"
-    }
-  },
   "dependencies": {
     "express": "^4.18.2",
     "typescript": "^5.3.3",
@@ -32,7 +26,6 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^20.11.21",
-    "husky": "^9.0.11",
     "tsx": "^4.19.2"
   }
 }
