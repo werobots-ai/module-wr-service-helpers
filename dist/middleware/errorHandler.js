@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.errorHandler = void 0;
 const errorHandler = (err, req, res, next) => {
     console.error(`API Error:`, {
         path: req.path,
@@ -35,4 +34,4 @@ const errorHandler = (err, req, res, next) => {
     }
     res.status(500).send(`Internal Server Error: ${err.message} ${err.stack}`);
 };
-exports.errorHandler = errorHandler;
+exports.default = errorHandler;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyPassword = exports.hashPassword = void 0;
+exports.hashPassword = hashPassword;
+exports.verifyPassword = verifyPassword;
 const crypto_1 = require("crypto");
 const SALT_LENGTH = 16; // Define the length of the per-password salt in bytes
 const HASH_LENGTH = 64; // Define the output length of the hashed password in bytes
@@ -21,7 +22,6 @@ function hashPassword(password, saltFromEnv) {
     const hash = (0, crypto_1.scryptSync)(password, combinedSalt, HASH_LENGTH).toString("hex");
     return `${userSalt}:${hash}`; // Return per-password salt and hash
 }
-exports.hashPassword = hashPassword;
 /**
  * Verifies if a plain text password matches the stored hash, using a per-password salt
  * and an optional environment-based salt if the password was encoded with one.
@@ -39,4 +39,3 @@ function verifyPassword(password, hash, saltFromEnv) {
     const originalHash = Buffer.from(storedHash, "hex");
     return (0, crypto_1.timingSafeEqual)(derivedHash, originalHash);
 }
-exports.verifyPassword = verifyPassword;

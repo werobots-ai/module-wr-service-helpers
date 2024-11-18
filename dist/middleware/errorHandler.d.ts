@@ -1,2 +1,3 @@
 import { ErrorRequestHandler } from "express";
-export declare const errorHandler: ErrorRequestHandler;
+declare const errorHandler: ErrorRequestHandler;
+export default errorHandler;
