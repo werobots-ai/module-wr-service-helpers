@@ -202,6 +202,8 @@ export type WorkspacePreset = {
   label: string;
   description: string;
   entityType: string;
+  fileDisplayTitleSource?: FieldSource;
+  fileDisplaySubtitleSource?: FieldSource;
   allowedFileTypes: string[] | null;
   autoIndex: AutoIndexConfig[] | null;
   aiDocumentParser: AiParserConfig | null;
