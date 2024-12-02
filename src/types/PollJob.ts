@@ -1,11 +1,13 @@
 export type PollParams = {
-  method: "poll";
   intervalMinutes: number;
-  startUrl: string;
-  paging: {
-    method: "nextCursor";
-    nextUrlField: string;
-    dataField: string;
-  };
-  sendBearerToken: boolean;
+  serial: {
+    method: "poll";
+    startUrl: string;
+    paging: {
+      method: "nextCursor";
+      nextUrlField: string;
+      dataField: string;
+    };
+    sendBearerToken: boolean;
+  }[];
 };
