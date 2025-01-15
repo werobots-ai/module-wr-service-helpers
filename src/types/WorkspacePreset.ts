@@ -161,20 +161,20 @@ export type ModelConfig = {
   topP: number;
 };
 
-export type AiParserConfig = (
-  | {
-      modelConfig: ModelConfig;
-      documentDescription: string;
-      dataLanguage?: string;
-      fields: Record<string, AiParserField>;
-      rules: string[];
-    }
-  | {
-      strategy: "page-inspection-v1";
-      modelConfig: ModelConfig;
-    }
-) &
-  AiParserProcessConfig;
+export type AiParserConfigV1 = {
+  modelConfig: ModelConfig;
+  documentDescription: string;
+  dataLanguage?: string;
+  fields: Record<string, AiParserField>;
+  rules: string[];
+} & AiParserProcessConfig;
+
+export type AiParserConfigV2 = {
+  strategy: "page-inspection-v1";
+  modelConfig: ModelConfig;
+} & AiParserProcessConfig;
+
+export type AiParserConfig = AiParserConfigV1 | AiParserConfigV2;
 
 export type FieldSource =
   | { sourceField: string }
