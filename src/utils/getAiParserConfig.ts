@@ -25,8 +25,11 @@ export const getAiParserConfig = ({
   } as AiParserConfig;
 
   if (
+    "documentDescription" in aiParserConfig &&
     aiParserConfig.documentDescription &&
+    "fields" in aiParserConfig &&
     aiParserConfig.fields &&
+    "rules" in aiParserConfig &&
     aiParserConfig.rules
   ) {
     return aiParserConfig;
