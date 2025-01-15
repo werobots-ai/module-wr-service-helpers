@@ -79,7 +79,7 @@ export type EmbedderConfig = {
 export type SegmenterConfig =
   | {
       name: string; // Unique within the index, so we can search for differently segmented versions of the same text.
-      strategy: string;
+      strategy: Omit<string, "v2-page">;
       minLength: number;
       maxLength: number;
       minOverlap: number;
@@ -88,11 +88,24 @@ export type SegmenterConfig =
     }
   | {
       name: string; // Unique within the index, so we can search for differently segmented versions of the same text.
-      strategy: string;
+      strategy: Omit<string, "v2-page">;
       minLength: number;
       maxLength: number;
       minOverlap: number;
       maxOverlap: number;
+      useAiDocumentParserOutput: false;
+      aiChunkParser: AiParserConfig | null;
+    }
+  | {
+      name: string; // Unique within the index, so we can search for differently segmented versions of the same text.
+      strategy: "v2-page";
+      pagesPerSegment: number;
+      useAiDocumentParserOutput: true;
+    }
+  | {
+      name: string; // Unique within the index, so we can search for differently segmented versions of the same text.
+      strategy: "v2-page";
+      pagesPerSegment: number;
       useAiDocumentParserOutput: false;
       aiChunkParser: AiParserConfig | null;
     };
