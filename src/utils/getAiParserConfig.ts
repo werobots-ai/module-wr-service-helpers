@@ -3,9 +3,11 @@ import { AiParserConfig, AutoIndexConfig } from "../types/WorkspacePreset";
 export const getAiParserConfig = ({
   autoIndexConfig,
   workspaceAiParserConfig,
+  skipKeyChecks,
 }: {
   autoIndexConfig: AutoIndexConfig;
   workspaceAiParserConfig?: AiParserConfig | null;
+  skipKeyChecks?: boolean;
 }): AiParserConfig | null => {
   const aiParserConfig = {
     ...(workspaceAiParserConfig &&
@@ -23,6 +25,10 @@ export const getAiParserConfig = ({
       {}
     ),
   } as AiParserConfig;
+
+  if (skipKeyChecks) {
+    return aiParserConfig;
+  }
 
   if (
     "documentDescription" in aiParserConfig &&
