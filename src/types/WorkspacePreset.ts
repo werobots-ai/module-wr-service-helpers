@@ -170,7 +170,7 @@ export type AiParserConfigV1 = {
 } & AiParserProcessConfig;
 
 export type AiParserConfigV2 = {
-  strategy: "page-inspection-v1";
+  strategy: "per-page-inspection-v1";
   modelConfig: ModelConfig;
 } & AiParserProcessConfig;
 
