@@ -4,14 +4,16 @@ const byteToHex: string[] = Array.from({ length: 256 }, (_, i) =>
   i.toString(16).padStart(2, "0")
 );
 
-export const generateUuidV4 = (): string => {
-  const bytes = randomBytes(16);
+export const generateUuidV4 = (optionalInput?: string): string => {
+  const bytes = optionalInput
+    ? // Hash the input using SHA-256 for better uniqueness
+      createHash("sha256").update(optionalInput).digest()
+    : // Generate random bytes if no input
+      randomBytes(16);
 
-  // Set version to 4 => xxxx-xxxx-4xxx
-  bytes[6] = (bytes[6] & 0x0f) | 0x40;
-
-  // Set variant to 10xx => xxxx-xxxx-xxxx-yxxx
-  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  // Adjust the bytes to match UUID v4 format
+  bytes[6] = (bytes[6] & 0x0f) | 0x40; // Set version to 4
+  bytes[8] = (bytes[8] & 0x3f) | 0x80; // Set variant to 10xx
 
   return [
     byteToHex[bytes[0]],
@@ -38,41 +40,9 @@ export const generateUuidV4 = (): string => {
 };
 
 export const filenameToUuidV4 = (filename?: string): string | undefined => {
-  if (!filename) return undefined;
+  if (!filename) return undefined; // this is a guard clause, needed for legacy code
 
-  // Hash the filename using SHA-256 for better uniqueness
-  const hash = createHash("sha256").update(filename).digest();
-
-  // Adjust the bytes to match UUID v4 format
-  hash[6] = (hash[6] & 0x0f) | 0x40; // Set version to 4
-  hash[8] = (hash[8] & 0x3f) | 0x80; // Set variant to 10xx
-
-  const byteToHex = Array.from({ length: 256 }, (_, i) =>
-    i.toString(16).padStart(2, "0")
-  );
-
-  return [
-    byteToHex[hash[0]],
-    byteToHex[hash[1]],
-    byteToHex[hash[2]],
-    byteToHex[hash[3]],
-    "-",
-    byteToHex[hash[4]],
-    byteToHex[hash[5]],
-    "-",
-    byteToHex[hash[6]],
-    byteToHex[hash[7]],
-    "-",
-    byteToHex[hash[8]],
-    byteToHex[hash[9]],
-    "-",
-    byteToHex[hash[10]],
-    byteToHex[hash[11]],
-    byteToHex[hash[12]],
-    byteToHex[hash[13]],
-    byteToHex[hash[14]],
-    byteToHex[hash[15]],
-  ].join("");
+  return generateUuidV4(filename);
 };
 
 export const generateUniqueId = (length: number = 24): string => {
