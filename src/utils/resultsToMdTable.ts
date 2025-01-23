@@ -1,11 +1,11 @@
+import { Schema } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
-import { SearchManagerOutput } from "./types";
 
 export const resultsToMdTable = (
   results: {
     [key: string]: any;
   }[],
-  schema: SearchManagerOutput["schema"],
+  schema: Schema,
   sort_by: string,
   sort_order: "asc" | "desc",
   useKeysInHeader = false,

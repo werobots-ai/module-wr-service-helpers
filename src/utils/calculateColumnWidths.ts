@@ -1,4 +1,4 @@
-type Schema = {
+export type Schema = {
   key: string;
   label: string;
   type: "string" | "number" | "boolean";
