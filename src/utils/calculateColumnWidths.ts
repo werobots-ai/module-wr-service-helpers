@@ -12,7 +12,7 @@ export const calculateColumnWidths = ({
   header,
   rows,
   schema,
-  maxTableWidth = (process.stdout.columns || 150) * 0.9,
+  maxTableWidth = 500,
 }: {
   header: string[];
   rows: string[][];
@@ -123,6 +123,7 @@ export const calculateColumnWidths = ({
     });
 
     if (
+      maxTableWidth &&
       !numberOfRowsOverAveragePerColumn.some((n) => n > halfOfRowCount) &&
       columnWidths.reduce((a, b) => a + b) + schema.length * 3 + 1 >=
         maxTableWidth
