@@ -1,6 +1,6 @@
-import e, { ErrorRequestHandler } from "express";
+import { ErrorRequestHandler } from "express";
 
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(
     `API Error:`,
     {
