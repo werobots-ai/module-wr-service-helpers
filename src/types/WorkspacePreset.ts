@@ -221,6 +221,7 @@ export type WorkspacePreset = {
     type: "storage";
     entityType: string;
     idPostfix: string;
+    namePostfix: string;
   }[];
   fileDisplayTitleSource?: FieldSource;
   fileDisplaySubtitleSource?: FieldSource;
