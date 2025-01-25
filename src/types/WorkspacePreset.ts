@@ -217,6 +217,11 @@ export type WorkspacePreset = {
   label: string;
   description: string;
   entityType: string;
+  subWorkspaces?: {
+    type: "storage";
+    entityType: string;
+    isPostfix: string;
+  }[];
   fileDisplayTitleSource?: FieldSource;
   fileDisplaySubtitleSource?: FieldSource;
   allowedFileTypes: string[] | null;
