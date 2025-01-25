@@ -220,7 +220,7 @@ export type WorkspacePreset = {
   subWorkspaces?: {
     type: "storage";
     entityType: string;
-    isPostfix: string;
+    idPostfix: string;
   }[];
   fileDisplayTitleSource?: FieldSource;
   fileDisplaySubtitleSource?: FieldSource;
