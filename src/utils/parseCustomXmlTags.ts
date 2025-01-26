@@ -5,13 +5,13 @@ import { getResultSorter } from "./getResultSorter";
 const getStyledArrow = (sortOrder: "asc" | "desc") =>
   `<span>${sortOrder.toLowerCase().includes("desc") ? "▲" : "▼"}</span>`;
 
-export const resultsToHtmlTable = async (
+export const parseCustomXmlTags = async (
   node: Node,
   getSearch: any
 ): Promise<string> => {
   if (node.type === "text") return node.text || "";
   const children = await Promise.all(
-    node.children?.map((node) => resultsToHtmlTable(node, getSearch)) || []
+    node.children?.map((node) => parseCustomXmlTags(node, getSearch)) || []
   );
 
   if (node.name === "data-result-table") {
@@ -89,6 +89,14 @@ export const resultsToHtmlTable = async (
               .join("")}
         </tbody>
     </table>`;
+  }
+
+  if (node.name === "data-page-view") {
+    const { workspace, file, page } = node.attributes;
+
+    return `<img src="/workspace/workspace/${workspace}/file/${encodeURIComponent(
+      file
+    )}/page/${page}" alt="Page ${page}" />`;
   }
 
   return `[${node.name}:${children}]`;
