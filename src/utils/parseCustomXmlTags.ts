@@ -94,7 +94,7 @@ export const parseCustomXmlTags = async (
   if (node.name === "data-page-view") {
     const { workspace, file, page } = node.attributes;
 
-    return `<img src="/workspace/workspace/${workspace}/file/${encodeURIComponent(
+    return `<img src="/api/workspace/workspace/${workspace}/file/${encodeURIComponent(
       file
     )}/page/${page}" alt="Page ${page}" />`;
   }
