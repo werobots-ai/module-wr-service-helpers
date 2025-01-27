@@ -21,7 +21,25 @@ export const parseCustomXmlTags = async (
       includeResults: true,
     });
 
-    const header = data.schema.map(
+    const schema = data.schema
+      .filter(({ key }: any) => key !== "relevance_score")
+      .sort((a: any, b: any) => {
+        if (a.key === sortBy) return -1;
+        if (b.key === sortBy) return 1;
+
+        if (a.key === "title") return -1;
+        if (b.key === "title") return 1;
+
+        if (a.key.includes("date")) return -1;
+        if (b.key.includes("date")) return 1;
+
+        if (a.key.includes("page")) return -1;
+        if (b.key.includes("page")) return 1;
+
+        return 0;
+      });
+
+    const header = schema.map(
       (field: { key: string; label: string }) =>
         field.label +
         (sortBy === field.key
@@ -35,7 +53,7 @@ export const parseCustomXmlTags = async (
       .slice()
       .sort(sorter)
       .map((result: { [key: string]: any }) =>
-        data.schema.map((field: { key: string }) =>
+        schema.map((field: { key: string }) =>
           typeof result[field.key] === "boolean"
             ? result[field.key]
               ? "Yes"
@@ -47,7 +65,7 @@ export const parseCustomXmlTags = async (
     const columnWidths = calculateColumnWidths({
       header,
       rows,
-      schema: data.schema,
+      schema,
       maxTableWidth: 100,
     });
 
