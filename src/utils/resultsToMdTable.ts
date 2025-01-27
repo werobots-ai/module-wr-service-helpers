@@ -1,3 +1,4 @@
+import { application } from "express";
 import { Schema } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
 
@@ -9,10 +10,19 @@ export const resultsToMdTable = (
   sort_by: string,
   sort_order: "asc" | "desc",
   useKeysInHeader = false,
-  renderRelevance = false,
+  colOrder: string[] = [],
+  hiddenColumns: string[] = [],
   addRowNumbers = false
 ) => {
-  const appliedSchema = renderRelevance ? schema : schema.slice(2);
+  const appliedSchema = (
+    colOrder.length
+      ? [
+          ...colOrder.map((key) => schema.find((field) => field.key === key)),
+          ...schema.filter((field) => !colOrder.includes(field.key)),
+        ]
+      : schema
+  ).filter((field) => field && !hiddenColumns.includes(field.key)) as Schema;
+
   const header = [
     ...(addRowNumbers ? ["#"] : []),
     ...appliedSchema.map(
