@@ -2,6 +2,8 @@ import { Node } from "./XmlStreamReplacer";
 import { calculateColumnWidths } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
 
+const MAX_INLINE_TABLE_ROWS = 15;
+
 const PAGE_KEYS = [
   "page",
   "pages",
@@ -26,10 +28,17 @@ export const parseCustomXmlTags = async (
   );
 
   if (node.name === "data-result-table") {
-    const { id, "sort-by": sortBy, "sort-order": sortOrder } = node.attributes;
+    const {
+      id,
+      "sort-by": sortBy,
+      "sort-order": sortOrder,
+      rows: rowsStr,
+    } = node.attributes;
     const data = await getSearch({
       id,
       includeResults: true,
+      rows: rowsStr,
+      limit: MAX_INLINE_TABLE_ROWS,
     });
 
     const schema = data.schema
