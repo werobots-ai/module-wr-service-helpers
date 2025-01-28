@@ -14,7 +14,7 @@ const PAGE_KEYS = [
 ];
 
 const getStyledArrow = (sortOrder: "asc" | "desc") =>
-  `<span>${sortOrder.toLowerCase().includes("desc") ? "▲" : "▼"}</span>`;
+  ` ${sortOrder.toLowerCase().includes("desc") ? "▲" : "▼"}`;
 
 export const parseCustomXmlTags = async (
   node: Node,
@@ -44,8 +44,8 @@ export const parseCustomXmlTags = async (
         if (a.key.includes("date")) return -1;
         if (b.key.includes("date")) return 1;
 
-        if (a.key.includes("page")) return -1;
-        if (b.key.includes("page")) return 1;
+        if (PAGE_KEYS.includes(a.key)) return -1;
+        if (PAGE_KEYS.includes(b.key)) return 1;
 
         return 0;
       });
@@ -80,14 +80,6 @@ export const parseCustomXmlTags = async (
       maxTableWidth: 100,
     });
 
-    // rows.forEach((row) => {
-    //   row.forEach((cell, i) => {
-    //     if (PAGE_KEYS.includes(schema[i].key)) {
-    //       row[i] = `[${cell}](/assets/pages?p=${cell})`;
-    //     }
-    //   });
-    // });
-
     // Calculate total character width for all columns
     const totalColumnWidth = columnWidths.reduce(
       (sum, width) => sum + width,
@@ -111,8 +103,6 @@ export const parseCustomXmlTags = async (
             </tr>
         </thead>
         <tbody>
-        
-           
             ${rows
               .map(
                 (row) =>
