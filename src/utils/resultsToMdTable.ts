@@ -1,4 +1,3 @@
-import { application } from "express";
 import { Schema } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
 

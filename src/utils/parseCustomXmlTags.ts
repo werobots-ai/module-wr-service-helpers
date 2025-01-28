@@ -69,10 +69,6 @@ export const parseCustomXmlTags = async (
             ? result[field.key]
               ? "Yes"
               : "No"
-            : PAGE_KEYS.includes(field.key)
-            ? `[${result[field.key] as string}](/assets/pages?p=${
-                result[field.key] as string
-              })`
             : (result[field.key] as string)
         )
       ) as string[][];
@@ -82,6 +78,14 @@ export const parseCustomXmlTags = async (
       rows,
       schema,
       maxTableWidth: 100,
+    });
+
+    rows.forEach((row) => {
+      row.forEach((cell, i) => {
+        if (PAGE_KEYS.includes(schema[i].key)) {
+          row[i] = `[${cell}](/assets/pages?p=${cell})`;
+        }
+      });
     });
 
     // Calculate total character width for all columns
