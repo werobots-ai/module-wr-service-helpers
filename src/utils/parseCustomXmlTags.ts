@@ -2,6 +2,17 @@ import { Node } from "./XmlStreamReplacer";
 import { calculateColumnWidths } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
 
+const PAGE_KEYS = [
+  "page",
+  "pages",
+  "page_number",
+  "page_numbers",
+  "page_no",
+  "page_nos",
+  "page_num",
+  "page_nums",
+];
+
 const getStyledArrow = (sortOrder: "asc" | "desc") =>
   `<span>${sortOrder.toLowerCase().includes("desc") ? "▲" : "▼"}</span>`;
 
@@ -58,6 +69,10 @@ export const parseCustomXmlTags = async (
             ? result[field.key]
               ? "Yes"
               : "No"
+            : PAGE_KEYS.includes(field.key)
+            ? `[${result[field.key] as string}](/assets/pages?p=${
+                result[field.key] as string
+              })`
             : (result[field.key] as string)
         )
       ) as string[][];
