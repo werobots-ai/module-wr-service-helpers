@@ -80,13 +80,13 @@ export const parseCustomXmlTags = async (
       maxTableWidth: 100,
     });
 
-    rows.forEach((row) => {
-      row.forEach((cell, i) => {
-        if (PAGE_KEYS.includes(schema[i].key)) {
-          row[i] = `[${cell}](/assets/pages?p=${cell})`;
-        }
-      });
-    });
+    // rows.forEach((row) => {
+    //   row.forEach((cell, i) => {
+    //     if (PAGE_KEYS.includes(schema[i].key)) {
+    //       row[i] = `[${cell}](/assets/pages?p=${cell})`;
+    //     }
+    //   });
+    // });
 
     // Calculate total character width for all columns
     const totalColumnWidth = columnWidths.reduce(
@@ -119,7 +119,13 @@ export const parseCustomXmlTags = async (
                   `<tr>${row
                     .map(
                       (cell, i) =>
-                        `<td style="padding: 4px; width: ${columnWidthsPercent[i]}%">${cell}</td>`
+                        `<td style="padding: 4px; width: ${
+                          columnWidthsPercent[i]
+                        }%">${
+                          PAGE_KEYS.includes(schema[i].key)
+                            ? `[${cell}](/assets/pages?p=${cell})`
+                            : cell
+                        }</td>`
                     )
                     .join("")}</tr>`
               )
