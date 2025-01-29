@@ -1,7 +1,9 @@
-import { Handler } from "express";
-import { authSingleton } from "./authSingleton.js";
-import { AuthData } from "../types/AuthData.js";
-import { invokeService } from "../utils/invokeService.js";
+import { Handler } from 'express';
+import jwt from 'jsonwebtoken';
+
+import { AuthData } from '../types/AuthData.js';
+import { invokeService } from '../utils/invokeService.js';
+import { authSingleton } from './authSingleton.js';
 
 const securityHeaderName =
   process.env.SECURITY_HEADER_NAME || ("x-wr-key" as string);
@@ -109,12 +111,22 @@ const getAuthData = async (
 export const ensureLoggedIn: Handler = async (req, res, next) => {
   try {
     const token = req.headers[securityHeaderName];
-    if (!token) {
+    if (!token || typeof token !== "string") {
       res.status(401).send("Unauthorized");
       return;
     }
 
-    const { data, error } = await getAuthData(token as string);
+    if (process.env.AUTH_SECRET) {
+      const decodedToken = jwt.decode(token);
+      if ((decodedToken as any)?.isServiceToken) {
+        const data = jwt.verify(token, process.env.AUTH_SECRET) as AuthData;
+        authSingleton.run(data, next);
+        console.log("Service token resolved internally");
+        return;
+      }
+    }
+
+    const { data, error } = await getAuthData(token);
     if (error) {
       res
         .status(error.status || 500)
