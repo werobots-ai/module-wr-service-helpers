@@ -116,10 +116,10 @@ export const ensureLoggedIn: Handler = async (req, res, next) => {
       return;
     }
 
-    if (process.env.AUTH_SECRET) {
+    if (process.env.WR_AUTH_SERVICE_KEY_SECRET) {
       const decodedToken = jwt.decode(token);
       if ((decodedToken as any)?.isServiceToken) {
-        const data = jwt.verify(token, process.env.AUTH_SECRET) as AuthData;
+        const data = jwt.verify(token, process.env.WR_AUTH_SERVICE_KEY_SECRET) as AuthData;
         authSingleton.run(data, next);
         console.log("Service token resolved internally");
         return;
