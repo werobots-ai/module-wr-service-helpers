@@ -159,6 +159,8 @@ export type ModelConfig = {
   maxTokens: number;
   temperature: number;
   topP: number;
+  seed?: number;
+  frequencyPenalty?: number;
 };
 
 export type AiParserConfigV1 = {
