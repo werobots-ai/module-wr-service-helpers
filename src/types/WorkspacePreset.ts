@@ -161,6 +161,7 @@ export type ModelConfig = {
   topP: number;
   seed?: number;
   frequencyPenalty?: number;
+  presencePenalty?: number;
 };
 
 export type AiParserConfigV1 = {
