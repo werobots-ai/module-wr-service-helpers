@@ -33,6 +33,12 @@ export class XmlStreamReplacer {
     try {
       while (this.chunkQueue.length) {
         const nextChunk = this.chunkQueue.shift()!;
+        if (nextChunk && typeof nextChunk !== "string") {
+          // pass through non-string chunks
+          this.output(nextChunk);
+          continue;
+        }
+
         for (const char of nextChunk) {
           // We must await processChar, so we don’t race ahead.
           await this.processChar(char);
