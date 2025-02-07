@@ -2,7 +2,7 @@ import { Node } from "./XmlStreamReplacer";
 import { calculateColumnWidths } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
 
-const MAX_INLINE_TABLE_ROWS = 15;
+const MAX_INLINE_TABLE_ROWS = 5;
 
 const PAGE_KEYS = [
   "page",
