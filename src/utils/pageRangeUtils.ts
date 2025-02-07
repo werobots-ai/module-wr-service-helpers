@@ -16,7 +16,7 @@ const parseStringToRanges = (input: string, totalPages: number): Range[] => {
   const parts = trimmedInput.split(",");
   let ranges: Range[] = [];
 
-  parts.forEach(part => {
+  parts.forEach((part) => {
     part = part.trim();
 
     if (part.toLowerCase() === "all") {
@@ -28,7 +28,7 @@ const parseStringToRanges = (input: string, totalPages: number): Range[] => {
     let to: number | undefined;
 
     if (part.includes("-")) {
-      const [startStr, endStr] = part.split("-").map(s => s.trim());
+      const [startStr, endStr] = part.split("-").map((s) => s.trim());
       from = startStr ? parseInt(startStr, 10) : undefined;
       to = endStr ? parseInt(endStr, 10) : undefined;
     } else {
@@ -48,7 +48,7 @@ const parseStringToRanges = (input: string, totalPages: number): Range[] => {
 const expandRangesToPages = (ranges: Range[], totalPages: number): number[] => {
   const pages: number[] = [];
 
-  ranges.forEach(range => {
+  ranges.forEach((range) => {
     let from = range.from !== undefined ? range.from : 1;
     let to = range.to !== undefined ? range.to : totalPages;
 
@@ -94,12 +94,12 @@ const compressPagesToRanges = (pages: number[]): Range[] => {
 };
 
 // Converts an array of ranges into a string
-const stringifyRanges = (ranges: Range[], totalPages: number): string => {
-  if (ranges.length === 1 && ranges[0].from === 1 && ranges[0].to === totalPages) {
-    return `1-${totalPages}`;
+const stringifyRanges = (ranges: Range[], totalPages?: number): string => {
+  if (ranges.length === 1) {
+    return `${ranges[0].from || 1}-${ranges[0].to || totalPages || ""}`;
   }
 
-  const parts = ranges.map(range => {
+  const parts = ranges.map((range) => {
     const fromStr = range.from !== undefined ? range.from.toString() : "";
     const toStr = range.to !== undefined ? range.to.toString() : "";
 
@@ -146,9 +146,10 @@ const mergeOverlappingRanges = (ranges: Range[]): Range[] => {
 
 // Validates and adjusts range bounds
 const validateRangeBounds = (ranges: Range[], totalPages: number): Range[] => {
-  return ranges.map(range => {
+  return ranges.map((range) => {
     let from = range.from !== undefined ? Math.max(1, range.from) : 1;
-    let to = range.to !== undefined ? Math.min(totalPages, range.to) : totalPages;
+    let to =
+      range.to !== undefined ? Math.min(totalPages, range.to) : totalPages;
     if (from > to) [from, to] = [to, from];
     return { from, to };
   });
@@ -179,17 +180,23 @@ const pagesToJson = (pages: number[]): Range[] => {
 };
 
 // Converts JSON format (array of ranges) to a string
-const jsonToString = (ranges: Range[], totalPages: number): string => {
+const jsonToString = (ranges: Range[], totalPages?: number): string => {
   ranges = mergeOverlappingRanges(ranges);
   return stringifyRanges(ranges, totalPages);
 };
 
-export const pagesStringToPageNumbers = (input: string, totalPages: number): number[] => {
+export const pagesStringToPageNumbers = (
+  input: string,
+  totalPages: number
+): number[] => {
   const ranges = stringToJson(input, totalPages);
   return jsonToPages(ranges, totalPages);
 };
 
-export const pageNumbersToPagesString = (pages: number[], totalPages: number) => {
+export const pageNumbersToPagesString = (
+  pages: number[],
+  totalPages?: number
+) => {
   const ranges = pagesToJson(pages);
   return jsonToString(ranges, totalPages);
 };
