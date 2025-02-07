@@ -12,8 +12,8 @@ export const getResultSorter = (
           : 0;
       }
 
-      const lowerA = a[sort_by].toString().toLowerCase();
-      const lowerB = b[sort_by].toString().toLowerCase();
+      const lowerA = (a[sort_by] || "").toString().toLowerCase();
+      const lowerB = (b[sort_by] || "").toString().toLowerCase();
 
       return lowerA < lowerB ? 1 : lowerA > lowerB ? -1 : 0;
     };
@@ -27,8 +27,8 @@ export const getResultSorter = (
         : 0;
     }
 
-    const lowerA = a[sort_by].toString().toLowerCase();
-    const lowerB = b[sort_by].toString().toLowerCase();
+    const lowerA = (a[sort_by] || "").toString().toLowerCase();
+    const lowerB = (b[sort_by] || "").toString().toLowerCase();
 
     return lowerA > lowerB ? 1 : lowerA < lowerB ? -1 : 0;
   };
