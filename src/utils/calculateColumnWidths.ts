@@ -32,9 +32,9 @@ export const calculateColumnWidths = ({
               ? b
                 ? "Yes"
                 : "No"
-              : b === null
-              ? ""
-              : b.toString()
+              : b
+              ? b.toString()
+              : ""
             )
               .split(/\s+/)
               .reduce((a, b) => Math.max(a, b.length), 0)
@@ -63,9 +63,9 @@ export const calculateColumnWidths = ({
                 ? b
                   ? "Yes"
                   : "No"
-                : b === null
-                ? ""
-                : b.toString()
+                : b
+                ? b.toString()
+                : ""
               ).toString() || ""
             ).length
           ),
@@ -87,9 +87,9 @@ export const calculateColumnWidths = ({
               ? b
                 ? "Yes"
                 : "No"
-              : b === null
-              ? ""
-              : b.toString()
+              : b
+              ? b.toString()
+              : ""
             ).toString() || ""
           ).length,
         0
@@ -114,9 +114,9 @@ export const calculateColumnWidths = ({
               ? cell
                 ? "Yes"
                 : "No"
-              : cell === null
-              ? ""
-              : cell.toString()
+              : cell
+              ? cell.toString()
+              : cell
             ).toString() || ""
           ).length > columnWidths[index]
       ).length;
