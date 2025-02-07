@@ -116,7 +116,7 @@ export const calculateColumnWidths = ({
                 : "No"
               : cell
               ? cell.toString()
-              : cell
+              : ""
             ).toString() || ""
           ).length > columnWidths[index]
       ).length;
