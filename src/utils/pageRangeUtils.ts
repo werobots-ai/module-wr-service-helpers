@@ -96,6 +96,11 @@ const compressPagesToRanges = (pages: number[]): Range[] => {
 // Converts an array of ranges into a string
 const stringifyRanges = (ranges: Range[], totalPages?: number): string => {
   if (ranges.length === 1) {
+    if (ranges[0].from === ranges[0].to) {
+      if (ranges[0].from) return ranges[0].from.toString();
+      return `1-${totalPages}`;
+    }
+
     return `${ranges[0].from || 1}-${ranges[0].to || totalPages || ""}`;
   }
 
