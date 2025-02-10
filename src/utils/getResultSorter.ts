@@ -1,6 +1,6 @@
 export const getResultSorter = (
-  sort_by: string,
-  sort_order: "asc" | "desc"
+  sort_by: string = "relevance_score",
+  sort_order: "asc" | "desc" = "asc"
 ) => {
   if (sort_order.toLowerCase().includes("desc"))
     return (a: any, b: any) => {
