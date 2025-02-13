@@ -13,7 +13,7 @@ export type AuthOrg = {
   }[];
   availableChatIntegrations: string[];
   isSecretAdditionEnabled: boolean;
-}
+};
 
 export type AuthUser = {
   id: string;
@@ -21,7 +21,20 @@ export type AuthUser = {
   email: string;
   name: string;
   roles: string[];
-}
+};
+
+export type AuthSecret = {
+  id: string;
+  orgId: string;
+  api: string;
+  accessKey: string;
+  secretKey: string | null;
+  fallbackAccessKey: string | null;
+  fallbackSecretKey: string | null;
+  name: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export interface AuthData {
   exp?: number;
@@ -30,6 +43,7 @@ export interface AuthData {
   orgId: string;
   user: AuthUser;
   isServiceToken?: boolean;
+  secrets?: AuthSecret[];
 }
 
 export type AuthSingleton = AsyncLocalStorage<AuthData>;
