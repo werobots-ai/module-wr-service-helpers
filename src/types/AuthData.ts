@@ -16,9 +16,10 @@ export type AuthOrg = {
 }
 
 export type AuthUser = {
-  name: string;
-  domain: string;
   id: string;
+  domain: string;
+  email: string;
+  name: string;
   roles: string[];
 }
 
