@@ -4,7 +4,7 @@ import { getResultSorter } from "./getResultSorter";
 
 const MAX_INLINE_TABLE_ROWS = 5;
 
-const PAGE_KEYS = [
+export const PAGE_KEYS = [
   "page",
   "pages",
   "page_number",
