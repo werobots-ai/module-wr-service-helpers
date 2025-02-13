@@ -6,6 +6,7 @@ export type AuthOrg = {
   description: string;
   availableWorkspacePresets: string[];
   availablePromptPresets: string[];
+  integrations?: string[];
   availableModels: {
     modelId: string;
     implementationId: string;
