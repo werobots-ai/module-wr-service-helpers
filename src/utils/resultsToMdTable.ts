@@ -1,5 +1,6 @@
 import { Schema } from "./calculateColumnWidths";
 import { getResultSorter } from "./getResultSorter";
+import { PAGE_KEYS } from "./parseCustomXmlTags";
 
 export const resultsToMdTable = (
   results: {
@@ -11,7 +12,8 @@ export const resultsToMdTable = (
   useKeysInHeader = false,
   colOrder: string[] = [],
   hiddenColumns: string[] = [],
-  addRowNumbers = false
+  addRowNumbers = false,
+  convertPageLinks = false
 ) => {
   const appliedSchema = (
     colOrder.length
@@ -44,6 +46,8 @@ export const resultsToMdTable = (
           ? result[field.key]
             ? "Yes"
             : "No"
+          : convertPageLinks && PAGE_KEYS.includes(field.key)
+          ? `[${result[field.key]}](/assets/pages?p=${result[field.key]})`
           : result[field.key]
       ),
     ]);
