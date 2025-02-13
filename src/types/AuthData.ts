@@ -24,7 +24,10 @@ export type AuthUser = {
 }
 
 export interface AuthData {
+  exp?: number;
+  iat?: number;
   org: AuthOrg;
+  orgId: string;
   user: AuthUser;
 }
 
