@@ -29,6 +29,7 @@ export interface AuthData {
   org: AuthOrg;
   orgId: string;
   user: AuthUser;
+  isServiceToken?: boolean;
 }
 
 export type AuthSingleton = AsyncLocalStorage<AuthData>;
