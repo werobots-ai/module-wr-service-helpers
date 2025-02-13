@@ -65,7 +65,7 @@ const getAuthData = async (
     "/verify",
     "POST",
     {
-      token: token,
+      token,
     },
     { skipJsonParse: true }
   );
