@@ -44,7 +44,8 @@ export interface AuthData {
   user: AuthUser;
   isServiceToken?: boolean;
   secrets?: {
-    [key: string]: AuthSecret;
+    OpenAI?: AuthSecret;
+    "AWS Bedrock"?: AuthSecret;
   };
 }
 
